@@ -1,0 +1,26 @@
+const akaneko = require('akaneko');
+const { MessageEmbed } = require('@discordjs/builders');
+const { randomInt } = require('./random.js');
+
+module.exports = {
+	autoPostPorn: async function(client) {
+		const randomTopic = [
+			akaneko.nsfw.ass(),
+			akaneko.nsfw.bdsm(),
+			akaneko.nsfw.blowjob(),
+			akaneko.nsfw.cum(),
+			akaneko.nsfw.doujin(),
+			akaneko.nsfw.feet(),
+			akaneko.nsfw.femdom(),
+			akaneko.nsfw.foxgirl(),
+			akaneko.nsfw.gifs(),
+			akaneko.nsfw.glasses(),
+			akaneko.nsfw.hentai(),
+			akaneko.nsfw.maid(),
+		];
+		const akanekoSan = new MessageEmbed()
+			.setColor('RANDOM')
+			.setImage(await randomTopic[randomInt(0, randomTopic.length)]);
+		return client.channels.fetch('988549632500039711').then(channel => channel.send({ embeds: [akanekoSan] }));
+	},
+};

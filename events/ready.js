@@ -1,7 +1,7 @@
 const { CLIENT_ID, GUILD_ID } = require('../arrays/config.json');
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
-
+const { autoPostPorn } = require('../modules/autoPorn.js');
 const commands = require('../arrays/interactionCommands.js');
 require('dotenv').config();
 
@@ -24,6 +24,10 @@ module.exports = {
 			);
 
 			console.log('Successfully reloaded application (/) commands.');
+
+			for (; ;) {
+				setTimeout(autoPostPorn(), 30000);
+			}
 		}
 		catch (error) {
 			console.error(error);
