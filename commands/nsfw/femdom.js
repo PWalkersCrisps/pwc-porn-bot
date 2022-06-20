@@ -19,7 +19,7 @@ module.exports = {
 
 			const akanekoSan = new MessageEmbed();
 			akanekoSan.setColor('RANDOM');
-			akanekoSan.setImage(akaneko.nsfw.femdom());
+			akanekoSan.setImage(await akaneko.nsfw.femdom());
 			return interaction.reply({ embeds: [akanekoSan] });
 
 		}

@@ -16,7 +16,6 @@ module.exports = {
 
 		}
 		else {
-			console.log(await akaneko.nsfw.ass());
 			const akanekoSan = new MessageEmbed();
 			akanekoSan.setColor('RANDOM');
 			akanekoSan.setImage(await akaneko.nsfw.ass());

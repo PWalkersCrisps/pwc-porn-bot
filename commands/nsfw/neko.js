@@ -19,7 +19,7 @@ module.exports = {
 
 			const akanekoSan = new MessageEmbed();
 			akanekoSan.setColor('RANDOM');
-			akanekoSan.setImage(akaneko.lewdneko());
+			akanekoSan.setImage(await akaneko.lewdneko());
 			return interaction.reply({ embeds: [akanekoSan] });
 
 		}
