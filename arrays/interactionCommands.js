@@ -31,4 +31,13 @@ module.exports = [
 	new SlashCommandBuilder()
 		.setName('panty')
 		.setDescription('nsfw'),
+	new SlashCommandBuilder()
+		.setName('botinfo')
+		.setDescription('Get information about the bot'),
+	new SlashCommandBuilder()
+		.setName('ping')
+		.setDescription('Ping the server the bot is being hosted on and see the delays that there is'),
+	new SlashCommandBuilder()
+		.setName('uptime')
+		.setDescription('See how long the bot has been up for since startup'),
 ];
