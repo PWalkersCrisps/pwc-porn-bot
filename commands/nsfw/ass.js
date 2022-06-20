@@ -16,10 +16,10 @@ module.exports = {
 
 		}
 		else {
-			console.log(akaneko.nsfw.ass());
+			console.log(await akaneko.nsfw.ass());
 			const akanekoSan = new MessageEmbed();
 			akanekoSan.setColor('RANDOM');
-			akanekoSan.setImage(akaneko.nsfw.ass());
+			akanekoSan.setImage(await akaneko.nsfw.ass());
 			return interaction.reply({ embeds: [akanekoSan] });
 
 		}
