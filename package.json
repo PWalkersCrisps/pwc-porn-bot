@@ -16,6 +16,9 @@
     "url": "https://github.com/PWalkersCrisps/pwc-porn-bot/issues"
   },
   "homepage": "https://github.com/PWalkersCrisps/pwc-porn-bot#readme",
+  "engines": {
+    "node": "^16.9.1"
+  },
   "dependencies": {
     "@discordjs/builders": "^0.15.0",
     "@discordjs/rest": "^0.5.0",
