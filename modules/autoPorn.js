@@ -1,9 +1,9 @@
 const akaneko = require('akaneko');
-const { MessageEmbed } = require('@discordjs/builders');
+
 const { randomInt } = require('./random.js');
 
 module.exports = {
-	autoPostPorn: async function(client) {
+	autoPostPorn: async function(client, MessageEmbed) {
 		const randomTopic = [
 			akaneko.nsfw.ass(),
 			akaneko.nsfw.bdsm(),
@@ -21,6 +21,7 @@ module.exports = {
 		const akanekoSan = new MessageEmbed()
 			.setColor('RANDOM')
 			.setImage(await randomTopic[randomInt(0, randomTopic.length)]);
-		return client.channels.fetch('988549632500039711').then(channel => channel.send({ embeds: [akanekoSan] }));
+		client.channels.fetch('988549632500039711').then(channel => channel.send({ embeds: [akanekoSan] }));
+		return console.log('Auto Porn invoked');
 	},
 };

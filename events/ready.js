@@ -1,9 +1,12 @@
+/* eslint-disable no-inner-declarations */
 const { CLIENT_ID, GUILD_ID } = require('../arrays/config.json');
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
-const { autoPostPorn } = require('../modules/autoPorn.js');
+const randomPornTopic = require('../arrays/randomTopic.js');
+const { randomInt } = require('../modules/random.js');
 const commands = require('../arrays/interactionCommands.js');
 require('dotenv').config();
+const { MessageEmbed } = require('discord.js');
 
 module.exports = {
 	name: 'ready',
@@ -25,8 +28,14 @@ module.exports = {
 
 			console.log('Successfully reloaded application (/) commands.');
 
-			for (; ;) {
-				setTimeout(autoPostPorn(), 30000);
+			function foo() {
+				setTimeout(async function() {
+					const akanekoSan = new MessageEmbed()
+						.setColor('RANDOM')
+						.setImage(await randomPornTopic[randomInt(0, randomPornTopic.length)]);
+					client.channels.fetch('988549632500039711').then(channel => channel.send({ embeds: [akanekoSan] }));
+					foo();
+				}, 15 * 1000);
 			}
 		}
 		catch (error) {
