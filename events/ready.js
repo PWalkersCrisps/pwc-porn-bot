@@ -37,7 +37,12 @@ module.exports = {
 					foo();
 				}, 15 * 1000);
 			}
-			foo();
+			try {
+				foo();
+			}
+			catch (error) {
+				console.error(error);
+			}
 		}
 		catch (error) {
 			console.error(error);
