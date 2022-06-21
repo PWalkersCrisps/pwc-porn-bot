@@ -3,7 +3,7 @@ const { randomInt } = require('../modules/random.js');
 const randomPornTopic = require('../arrays/randomTopic.js');
 const akaneko = require('akaneko');
 const loop = require('./loop.js');
-const reddit = require('@elchologamer/random-reddit');
+const reddit = require('random-reddit');
 
 const hentaiChannelID = '988549632500039711';
 
