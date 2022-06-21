@@ -13,6 +13,10 @@ const reddit = require('random-reddit');
 
 const hentaiChannelID = '988549632500039711';
 
+async function imagePost(topic, options) {
+	return await reddit.getImage(String(topic.subreddit), options) || await akaneko.nsfw.hentai();
+}
+
 async function postAkanekoHentai(client, loopDelay) {
 	setTimeout(async function() {
 		const topic = await randomPornTopic.hentaiAkanekoPorn[randomInt(0, randomPornTopic.hentaiAkanekoPorn.length)];
@@ -39,7 +43,7 @@ async function postRedditHentai(client, loopDelay) {
 			allowNSFW: true,
 		};
 
-		const image = await reddit.getImage(`${await topic.subreddit}`, options, 5) || await akaneko.nsfw.hentai();
+		const image = await imagePost(topic, options);
 		const footerText = await String(await topic.text) || 'Hentai';
 
 		const embed = new MessageEmbed()
@@ -73,7 +77,7 @@ module.exports = {
 			console.log('Successfully reloaded application (/) commands.');
 
 			postAkanekoHentai(client, 14);
-			postRedditHentai(client, 19);
+			// postRedditHentai(client, 19);
 
 		}
 		catch (error) {
