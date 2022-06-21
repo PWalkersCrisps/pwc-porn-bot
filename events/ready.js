@@ -24,7 +24,7 @@ async function postAkanekoHentai(client, loopDelay) {
 			.setColor('RANDOM')
 			.setTimestamp()
 			.setFooter({ text: `${footerText}` })
-			.setImage(image);
+			.setImage(String(image));
 
 		client.channels.fetch(hentaiChannelID).then(channel => channel.send({ embeds: [embed] }));
 		postAkanekoHentai(client, loopDelay);
