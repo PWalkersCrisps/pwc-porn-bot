@@ -2,11 +2,11 @@ const { MessageEmbed } = require('discord.js');
 const { randomInt } = require('../modules/random.js');
 const randomPornTopic = require('../arrays/randomTopic.js');
 const akaneko = require('akaneko');
-const loop = require('./loop.js');
 const reddit = require('random-reddit');
 
 const hentaiChannelID = '988549632500039711';
 
+/*
 module.exports = {
 	postAkanekoHentai : function(client, loopDelay) {
 		setTimeout(async function() {
@@ -45,3 +45,4 @@ module.exports = {
 		}, loopDelay * 1000);
 	},
 };
+*/

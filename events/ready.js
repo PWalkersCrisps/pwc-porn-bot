@@ -5,7 +5,49 @@ const { Routes } = require('discord-api-types/v9');
 const commands = require('../arrays/interactionCommands.js');
 require('dotenv').config();
 
-const loop = require('../modules/loop.js');
+const { MessageEmbed } = require('discord.js');
+const { randomInt } = require('../modules/random.js');
+const randomPornTopic = require('../arrays/randomTopic.js');
+const akaneko = require('akaneko');
+const reddit = require('random-reddit');
+
+const hentaiChannelID = '988549632500039711';
+
+async function postAkanekoHentai(client, loopDelay) {
+	setTimeout(async function() {
+		const topic = await randomPornTopic.hentaiAkanekoPorn[randomInt(0, randomPornTopic.hentaiAkanekoPorn.length)] || await akaneko.nsfw.hentai();
+
+		const embed = new MessageEmbed()
+			.setColor('RANDOM')
+			.setTimestamp()
+			.setFooter({ text: `${String(topic.text)}` })
+			.setImage(await topic.type);
+
+		client.channels.fetch(hentaiChannelID).then(channel => channel.send({ embeds: [embed] }));
+		postAkanekoHentai(client, loopDelay);
+	}, loopDelay * 1000);
+}
+async function postRedditHentai(client, loopDelay) {
+	setTimeout(async function() {
+		const topic = randomPornTopic.hentaiRedditPorn[randomInt(0, randomPornTopic.hentaiRedditPorn.length)] || await akaneko.nsfw.hentai();
+
+		const options = {
+			imageOnly: true,
+			allowNSFW: true,
+		};
+
+		const image = await reddit.getImage(`${topic.subreddit}`, options);
+
+
+		const embed = new MessageEmbed()
+			.setColor('RANDOM')
+			.setTimestamp()
+			.setFooter({ text: `${String(topic.text)}` })
+			.setImage(image);
+		client.channels.fetch(hentaiChannelID).then(channel => channel.send({ embeds: [embed] }));
+		postRedditHentai(client, loopDelay);
+	}, loopDelay * 1000);
+}
 
 module.exports = {
 	name: 'ready',
@@ -27,8 +69,9 @@ module.exports = {
 
 			console.log('Successfully reloaded application (/) commands.');
 
-			loop.postAkanekoHentai(client, 17.5);
-			loop.postRedditHentai(client, 15.5);
+			postAkanekoHentai(client, 14);
+			postRedditHentai(client, 19);
+
 		}
 		catch (error) {
 			console.error(error);
