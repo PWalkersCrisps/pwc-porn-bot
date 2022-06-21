@@ -15,7 +15,7 @@ module.exports = {
 			const embed = new MessageEmbed()
 				.setColor('RANDOM')
 				.setTimestamp()
-				.setFooter({ content: `${String(topic.text)}` })
+				.setFooter({ text: `${String(topic.text)}` })
 				.setImage(await topic.type);
 
 			client.channels.fetch(hentaiChannelID).then(channel => channel.send({ embeds: [embed] }));
@@ -38,7 +38,7 @@ module.exports = {
 			const embed = new MessageEmbed()
 				.setColor('RANDOM')
 				.setTimestamp()
-				.setFooter({ content: `${String(topic.text)}` })
+				.setFooter({ text: `${String(topic.text)}` })
 				.setImage(image);
 			client.channels.fetch(hentaiChannelID).then(channel => channel.send({ embeds: [embed] }));
 			loop.postRedditHentai();
