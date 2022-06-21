@@ -10,6 +10,7 @@ const { randomInt } = require('../modules/random.js');
 const randomPornTopic = require('../arrays/randomTopic.js');
 const akaneko = require('akaneko');
 
+/*
 const Reddit = require('reddit');
 const reddit = new Reddit({
 	username: String(process.env.REDDIT_USERNAME),
@@ -18,6 +19,7 @@ const reddit = new Reddit({
 	appSecret: String(process.env.REDDIT_APP_SECRET),
 	userAgent: 'MyApp/1.0.0 (http://example.com)',
 });
+*/
 
 module.exports = {
 	name: 'ready',
