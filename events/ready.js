@@ -17,14 +17,14 @@ async function postAkanekoHentai(client, loopDelay) {
 	setTimeout(async function() {
 		const topic = await randomPornTopic.hentaiAkanekoPorn[randomInt(0, randomPornTopic.hentaiAkanekoPorn.length)];
 
-		const image = topic.type || await akaneko.nsfw.hentai();
+		const image = await topic.type || await akaneko.nsfw.hentai();
 		const footerText = await String(topic.text) || 'Hentai';
 
 		const embed = new MessageEmbed()
 			.setColor('RANDOM')
 			.setTimestamp()
 			.setFooter({ text: `${footerText}` })
-			.setImage(String(image));
+			.setImage(String(await image));
 
 		client.channels.fetch(hentaiChannelID).then(channel => channel.send({ embeds: [embed] }));
 		postAkanekoHentai(client, loopDelay);
