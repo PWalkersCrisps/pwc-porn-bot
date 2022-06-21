@@ -23,7 +23,7 @@ async function postAkanekoHentai(client, loopDelay) {
 		const embed = new MessageEmbed()
 			.setColor('RANDOM')
 			.setTimestamp()
-			.setFooter({ text: `${footerText}` })
+			.setFooter({ text: `${await footerText}` })
 			.setImage(String(await image));
 
 		client.channels.fetch(hentaiChannelID).then(channel => channel.send({ embeds: [embed] }));
@@ -32,21 +32,21 @@ async function postAkanekoHentai(client, loopDelay) {
 }
 async function postRedditHentai(client, loopDelay) {
 	setTimeout(async function() {
-		const topic = randomPornTopic.hentaiRedditPorn[randomInt(0, randomPornTopic.hentaiRedditPorn.length)] || await akaneko.nsfw.hentai();
+		const topic = await randomPornTopic.hentaiRedditPorn[randomInt(0, randomPornTopic.hentaiRedditPorn.length)] || await akaneko.nsfw.hentai();
 
 		const options = {
 			imageOnly: true,
 			allowNSFW: true,
 		};
 
-		const image = await reddit.getImage(`${topic.subreddit}`, options) || await akaneko.nsfw.hentai();
-		const footerText = await String(topic.text) || 'Hentai';
+		const image = await reddit.getImage(`${await topic.subreddit}`, options) || await akaneko.nsfw.hentai();
+		const footerText = await String(await topic.text) || 'Hentai';
 
 		const embed = new MessageEmbed()
 			.setColor('RANDOM')
 			.setTimestamp()
-			.setFooter({ text: `${footerText}` })
-			.setImage(image);
+			.setFooter({ text: `${await footerText}` })
+			.setImage(await image);
 		client.channels.fetch(hentaiChannelID).then(channel => channel.send({ embeds: [embed] }));
 		postRedditHentai(client, loopDelay);
 	}, loopDelay * 1000);
