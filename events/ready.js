@@ -29,20 +29,22 @@ module.exports = {
 			console.log('Successfully reloaded application (/) commands.');
 
 			function foo() {
-				setTimeout(async function() {
-					const akanekoSan = new MessageEmbed()
-						.setColor('RANDOM')
-						.setImage(await randomPornTopic[randomInt(0, randomPornTopic.length)]);
-					client.channels.fetch('988549632500039711').then(channel => channel.send({ embeds: [akanekoSan] }));
-					foo();
-				}, 15 * 1000);
+				try {
+					setTimeout(async function() {
+						const akanekoSan = new MessageEmbed()
+							.setColor('RANDOM')
+							.setImage(await randomPornTopic[randomInt(0, randomPornTopic.length)]);
+						client.channels.fetch('988549632500039711').then(channel => channel.send({ embeds: [akanekoSan] }));
+						foo();
+					}, 15 * 1000);
+				}
+				catch (error) {
+					console.error(error);
+				}
+
 			}
-			try {
-				foo();
-			}
-			catch (error) {
-				console.error(error);
-			}
+
+			foo();
 		}
 		catch (error) {
 			console.error(error);

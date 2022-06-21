@@ -12,6 +12,7 @@ module.exports = [
 	akaneko.nsfw.gifs(),
 	akaneko.nsfw.glasses(),
 	akaneko.nsfw.hentai(),
+	akaneko.nsfw.netorare(),
 	akaneko.nsfw.maid(),
 	akaneko.nsfw.masturbation(),
 	akaneko.nsfw.mobileWallpapers(),
