@@ -39,7 +39,7 @@ async function postRedditHentai(client, loopDelay) {
 			allowNSFW: true,
 		};
 
-		const image = await reddit.getImage(`${await topic.subreddit}`, options) || await akaneko.nsfw.hentai();
+		const image = await reddit.getImage(`${await topic.subreddit}`, options, 5) || await akaneko.nsfw.hentai();
 		const footerText = await String(await topic.text) || 'Hentai';
 
 		const embed = new MessageEmbed()

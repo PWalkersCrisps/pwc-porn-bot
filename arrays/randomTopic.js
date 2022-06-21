@@ -32,6 +32,7 @@ const hentaiAkanekoPorn = [
 
 const hentaiRedditPorn = [
 	{ subreddit: 'hentai', text: 'Hentai' },
+	{ subreddit: 'yuri', text: 'Hentai-Yuri' },
 ];
 
 const irlPorn = [
