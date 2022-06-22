@@ -18,7 +18,8 @@ async function postAkanekoHentai(client, loopDelay) {
 	setTimeout(async function() {
 		const topic = await randomPornTopic.hentaiAkanekoPorn[randomInt(0, randomPornTopic.hentaiAkanekoPorn.length)];
 
-		const imageURL = await String(topic.type) || akaneko.nsfw.hentai();
+		let imageURL = await String(topic.type);
+		if (!isValidHttpUrl(imageURL)) { imageURL = await akaneko.nsfw.hentai(); }
 		const footerText = await String(topic.text) || 'Hentai';
 
 		const embed = new MessageEmbed()
@@ -33,7 +34,7 @@ async function postAkanekoHentai(client, loopDelay) {
 }
 async function postRedditHentai(client, loopDelay) {
 	setTimeout(async function() {
-		const topic = await randomPornTopic.hentaiRedditPorn[randomInt(0, randomPornTopic.hentaiRedditPorn.length)];
+		// const topic = await randomPornTopic.hentaiRedditPorn[randomInt(0, randomPornTopic.hentaiRedditPorn.length)];
 
 		let imageURL = await String(reddit.getImage(['hentai', 'yuri']));
 		if (!isValidHttpUrl(imageURL)) { imageURL = await akaneko.nsfw.hentai(); }
