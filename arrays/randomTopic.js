@@ -31,12 +31,42 @@ const hentaiAkanekoPorn = [
 ];
 
 const hentaiRedditPorn = [
-	{ subreddit: 'hentai', text: 'Hentai' },
-	{ subreddit: 'yuri', text: 'Hentai-Yuri' },
+	'hentai',
+	'yuri',
+	'Tomboy_Hentai',
+	'Masturbation_Hentai',
+	'rule34',
+	'HENTAI_GIF',
+	'catgirlhentai',
+	'FlatChestHentai',
+	'Nekomimi',
+	'YuriHentai',
+	'hentaifemdom',
 ];
 
 const irlPorn = [
-
+	'gonewild',
+	'BiggerThanYouThought',
+	'bigtiddygothgf',
+	'BonerMaterial',
+	'Boobies',
+	'Bottomless',
+	'cumshots',
+	'cumsluts',
+	'dildo',
+	'flatchests',
+	'GirlsGW',
+	'GirlsShowering',
+	'Gonewild18',
+	'LegalTeens',
+	'Lesbians',
+	'MasturbationGoneWild',
+	'nsfw',
+	'Nudes',
+	'porn',
+	'pussy',
+	'scissoring',
+	'Slut',
 ];
 
 module.exports = { hentaiAkanekoPorn, hentaiRedditPorn, irlPorn };

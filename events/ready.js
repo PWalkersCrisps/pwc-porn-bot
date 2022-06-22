@@ -13,6 +13,7 @@ const reddit = require('random-reddit');
 const { isValidHttpUrl } = require('../modules/modifyString.js');
 
 const hentaiChannelID = '988549632500039711';
+const irlChannelID = '988877445983797298';
 
 async function postAkanekoHentai(client, loopDelay) {
 	setTimeout(async function() {
@@ -33,9 +34,9 @@ async function postAkanekoHentai(client, loopDelay) {
 }
 async function postRedditHentai(client, loopDelay) {
 	setTimeout(async function() {
-		// const topic = await randomPornTopic.hentaiRedditPorn[randomInt(0, randomPornTopic.hentaiRedditPorn.length)];
+		const subreddit = randomPornTopic.hentaiRedditPorn;
 
-		let imageURL = await String(reddit.getImage(['hentai', 'yuri']));
+		let imageURL = await String(reddit.getImage(subreddit));
 		if (!isValidHttpUrl(imageURL)) { imageURL = await akaneko.nsfw.hentai(); }
 		const footerText = 'Hentai';
 
@@ -46,6 +47,23 @@ async function postRedditHentai(client, loopDelay) {
 			.setImage(await imageURL);
 		client.channels.fetch(hentaiChannelID).then(channel => channel.send({ embeds: [embed] }));
 		postRedditHentai(client, loopDelay);
+	}, loopDelay * 1000);
+}
+async function postRedditNSFW(client, loopDelay) {
+	setTimeout(async function() {
+		const subreddit = randomPornTopic.irlPorn;
+
+		const imageURL = await String(reddit.getImage(subreddit));
+		if (!isValidHttpUrl(imageURL)) { return; }
+		const footerText = 'Porn';
+
+		const embed = new MessageEmbed()
+			.setColor('RANDOM')
+			.setTimestamp()
+			.setFooter({ text: `${await footerText}` })
+			.setImage(await imageURL);
+		client.channels.fetch(hentaiChannelID).then(channel => channel.send({ embeds: [embed] }));
+		postRedditNSFW(client, loopDelay);
 	}, loopDelay * 1000);
 }
 
@@ -71,6 +89,7 @@ module.exports = {
 
 			postAkanekoHentai(client, 14);
 			postRedditHentai(client, 19);
+			postRedditNSFW(client, 15);
 
 		}
 		catch (error) {
