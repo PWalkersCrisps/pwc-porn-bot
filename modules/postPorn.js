@@ -13,6 +13,14 @@ function loadAll(client, loopDelay) {
 	postRedditHentai(client, loopDelay);
 	postRedditNSFW(client, loopDelay);
 }
+async function checkRedgif(checkURL) {
+	let newImageURL = checkURL;
+	const subreddit = randomPornTopic.irlPorn;
+	while (newImageURL.includes('redgifs.com')) {
+		newImageURL = await reddit.getImage(subreddit);
+	}
+	return newImageURL;
+}
 async function postAkanekoHentai(client, loopDelay) {
 	setTimeout(async function() {
 		const topic = await randomPornTopic.hentaiAkanekoPorn[randomInt(0, randomPornTopic.hentaiAkanekoPorn.length)];
@@ -51,7 +59,7 @@ async function postRedditNSFW(client, loopDelay) {
 	setTimeout(async function() {
 		const subreddit = randomPornTopic.irlPorn;
 
-		const imageURL = await reddit.getImage(subreddit);
+		const imageURL = await checkRedgif(await reddit.getImage(subreddit));
 		if (!isValidHttpUrl(imageURL)) { return; }
 		const footerText = 'Porn';
 
