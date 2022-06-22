@@ -10,6 +10,7 @@ const { randomInt } = require('../modules/random.js');
 const randomPornTopic = require('../arrays/randomTopic.js');
 const akaneko = require('akaneko');
 const reddit = require('random-reddit');
+const { isValidHttpUrl } = require('../modules/modifyString.js');
 
 const hentaiChannelID = '988549632500039711';
 
@@ -21,14 +22,15 @@ async function postAkanekoHentai(client, loopDelay) {
 	setTimeout(async function() {
 		const topic = await randomPornTopic.hentaiAkanekoPorn[randomInt(0, randomPornTopic.hentaiAkanekoPorn.length)];
 
-		const image = await String(topic.type) || await akaneko.nsfw.hentai();
+		let imageURL = await String(topic.type);
+		if (!isValidHttpUrl(imageURL)) { imageURL = await akaneko.nsfw.hentai(); }
 		const footerText = await String(topic.text) || 'Hentai';
 
 		const embed = new MessageEmbed()
 			.setColor('RANDOM')
 			.setTimestamp()
 			.setFooter({ text: `${await footerText}` })
-			.setImage(String(await image));
+			.setImage(String(await imageURL));
 
 		client.channels.fetch(hentaiChannelID).then(channel => channel.send({ embeds: [embed] }));
 		postAkanekoHentai(client, loopDelay);
@@ -36,21 +38,17 @@ async function postAkanekoHentai(client, loopDelay) {
 }
 async function postRedditHentai(client, loopDelay) {
 	setTimeout(async function() {
-		const topic = await randomPornTopic.hentaiRedditPorn[randomInt(0, randomPornTopic.hentaiRedditPorn.length)] || await akaneko.nsfw.hentai();
+		const topic = await randomPornTopic.hentaiRedditPorn[randomInt(0, randomPornTopic.hentaiRedditPorn.length)];
 
-		const options = {
-			imageOnly: true,
-			allowNSFW: true,
-		};
-
-		const image = await imagePost(topic, options);
+		let imageURL = await imagePost(topic);
+		if (!isValidHttpUrl(imageURL)) { imageURL = await akaneko.nsfw.hentai(); }
 		const footerText = await String(await topic.text) || 'Hentai';
 
 		const embed = new MessageEmbed()
 			.setColor('RANDOM')
 			.setTimestamp()
 			.setFooter({ text: `${await footerText}` })
-			.setImage(await image);
+			.setImage(await imageURL);
 		client.channels.fetch(hentaiChannelID).then(channel => channel.send({ embeds: [embed] }));
 		postRedditHentai(client, loopDelay);
 	}, loopDelay * 1000);
@@ -77,7 +75,7 @@ module.exports = {
 			console.log('Successfully reloaded application (/) commands.');
 
 			postAkanekoHentai(client, 14);
-			// postRedditHentai(client, 19);
+			postRedditHentai(client, 19);
 
 		}
 		catch (error) {
