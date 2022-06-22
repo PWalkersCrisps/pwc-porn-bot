@@ -18,8 +18,8 @@ async function postAkanekoHentai(client, loopDelay) {
 	setTimeout(async function() {
 		const topic = await randomPornTopic.hentaiAkanekoPorn[randomInt(0, randomPornTopic.hentaiAkanekoPorn.length)];
 
-		const imageURL = await topic.type || akaneko.nsfw.hentai();
-		const footerText = await String(topic.text) || 'Hentai';
+		const imageURL = await topic || akaneko.nsfw.hentai();
+		const footerText = 'Hentai';
 
 		const embed = new MessageEmbed()
 			.setColor('RANDOM')
