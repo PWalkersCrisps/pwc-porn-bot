@@ -36,7 +36,7 @@ async function postRedditHentai(client, loopDelay) {
 	setTimeout(async function() {
 		const topic = await randomPornTopic.hentaiRedditPorn[randomInt(0, randomPornTopic.hentaiRedditPorn.length)];
 
-		let imageURL = await String(reddit.getImage(topic.subreddit));
+		let imageURL = await String(reddit.getImage(['hentai', 'yuri']));
 		if (!isValidHttpUrl(imageURL)) { imageURL = await akaneko.nsfw.hentai(); }
 		const footerText = await String(await topic.text) || 'Hentai';
 
