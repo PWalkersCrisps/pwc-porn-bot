@@ -14,10 +14,6 @@ const { isValidHttpUrl } = require('../modules/modifyString.js');
 
 const hentaiChannelID = '988549632500039711';
 
-async function imagePost(topic, options) {
-	return await reddit.getImage(String(topic.subreddit), options) || await akaneko.nsfw.hentai();
-}
-
 async function postAkanekoHentai(client, loopDelay) {
 	setTimeout(async function() {
 		const topic = await randomPornTopic.hentaiAkanekoPorn[randomInt(0, randomPornTopic.hentaiAkanekoPorn.length)];
@@ -40,7 +36,7 @@ async function postRedditHentai(client, loopDelay) {
 	setTimeout(async function() {
 		const topic = await randomPornTopic.hentaiRedditPorn[randomInt(0, randomPornTopic.hentaiRedditPorn.length)];
 
-		let imageURL = await imagePost(topic);
+		let imageURL = await String(reddit.getImage(topic.subreddit));
 		if (!isValidHttpUrl(imageURL)) { imageURL = await akaneko.nsfw.hentai(); }
 		const footerText = await String(await topic.text) || 'Hentai';
 
