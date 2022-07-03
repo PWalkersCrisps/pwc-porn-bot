@@ -32,6 +32,10 @@ module.exports = [
 		.setName('panty')
 		.setDescription('nsfw'),
 	new SlashCommandBuilder()
+		.setName('ass')
+		.setDescription('nsfw')
+		.addStringOption(option => option.setName('tag').setDescription('Search with R34 tag').setRequired(true)),
+	new SlashCommandBuilder()
 		.setName('botinfo')
 		.setDescription('Get information about the bot'),
 	new SlashCommandBuilder()
