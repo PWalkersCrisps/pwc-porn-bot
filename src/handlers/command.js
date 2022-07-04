@@ -12,9 +12,6 @@ module.exports = (client) => {
 			const pull = require(path.resolve(`./commands/${dir}/${file}`));
 			if (pull.name) {
 				client.commands.set(pull.name, pull);
-				client.description.set(pull.description, pull);
-				client.usage.set(pull.usage, pull);
-				client.data.set(pull.data, pull);
 				table.addRow(file, '✅');
 			}
 			else {

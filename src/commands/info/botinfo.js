@@ -18,12 +18,7 @@ const formatOS = {
 
 module.exports = {
 	name: 'botinfo',
-	category: 'Info',
 	description: 'Displays indept information about the bot.',
-	usage: 'botinfo',
-	data: new SlashCommandBuilder()
-		.setName('botinfo')
-		.setDescription('Get information about the bot'),
 	async execute(client, interaction, MessageActionRow, MessageButton) {
 		cpuStat.usagePercent(function(error, percent, seconds) {
 			if (error) {
