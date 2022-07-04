@@ -1,5 +1,5 @@
 const fs = require('fs');
-const eventFiles = fs.readdirSync('./events').filter(file => file.endsWith('.js')); // Gets all the files in the events folder and puts them into an array
+const eventFiles = fs.readdirSync('./src/events').filter(file => file.endsWith('.js')); // Gets all the files in the events folder and puts them into an array
 module.exports = (client) => {
 	for (const file of eventFiles) {
 		const event = require(`../events/${file}`);
