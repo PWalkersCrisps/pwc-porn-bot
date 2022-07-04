@@ -1,10 +1,11 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
 const { version: djsversion, MessageEmbed } = require('discord.js');
-const { formatBytes } = require('../../modules/modifyString');
-const { parseDur } = require('../../modules/time.js');
 const cpuStat = require('cpu-stat');
 const moment = require('moment');
 const os = require('os');
+
+const { formatBytes } = require('../../modules/modifyString');
+const { parseDur } = require('../../modules/time.js');
+const { BOT_OWNER } = require('../../arrays/config.json');
 
 const formatOS = {
 	aix: 'IBM AIX',
@@ -36,8 +37,8 @@ module.exports = {
 						inline: false,
 						value: `>>> **<:card:773965449402646549> Bot Name: ${client.user.tag}**\n
 							**📇 Bot ID: ${client.user.id}**\n
-							**👑 Bot Owner: ${client.users.cache.get(process.env.BOT_OWNER).tag}**\n
-							**💻 Bot Dev: ${client.users.cache.get(process.env.BOT_OWNER).tag}**\n
+							**👑 Bot Owner: ${client.users.cache.get(BOT_OWNER).tag}**\n
+							**💻 Bot Dev: ${client.users.cache.get(BOT_OWNER).tag}**\n
 							**🌐 Servers: ${client.guilds.cache.size.toLocaleString()} Servers**\n
 							**👥 Users: ${client.users.cache.size.toLocaleString()} Users**\n
 							**📺 Channels: ${client.channels.cache.size.toLocaleString()} Channels**\n

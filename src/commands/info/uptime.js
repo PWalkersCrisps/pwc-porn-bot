@@ -1,5 +1,4 @@
 const { parseDur } = require('../../modules/time.js');
-const { SlashCommandBuilder } = require('@discordjs/builders');
 
 module.exports = {
 	name: 'uptime',
