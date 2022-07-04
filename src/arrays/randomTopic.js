@@ -30,6 +30,52 @@ const hentaiAkanekoPorn = [
 	ansfw.zettaiRyouiki(),
 ];
 
+const danbooruPorn = [
+	'ass',
+	'bdsm',
+	'blowjob',
+	'cum',
+	'doujin',
+	'feet',
+	'femdom',
+	'foxgirl',
+	'gifs',
+	'glasses',
+	'hentai',
+	'netorare',
+	'maid',
+	'masturbation',
+	'mobileWallpapers',
+	'orgy',
+	'panties',
+	'pussy',
+	'school',
+	'succubus',
+	'tentacles',
+	'thighs',
+	'uniform',
+	'wallpapers',
+	'yuri',
+	'zettaiRyouiki',
+];
+
+const validBoorus = [
+	{ name: 'e621', value: 'booru_e621' },
+	{ name: 'e926', value: 'booru_e926' },
+	{ name: 'hypnohub', value: 'booru_hypnohub' },
+	{ name: 'danbooru', value: 'booru_danbooru' },
+	{ name: 'konachan', value: 'booru_konachan' },
+	{ name: 'yande', value: 'booru_yande' },
+	{ name: 'gelbooru', value: 'booru_gelbooru' },
+	{ name: 'rule34', value: 'booru_rule34' },
+	{ name: 'safebooru', value: 'booru_safebooru' },
+	{ name: 'tbib', value: 'booru_tbib' },
+	{ name: 'xbooru', value: 'booru_xbooru' },
+	{ name: 'rule34paheal', value: 'booru_rule34paheal' },
+	{ name: 'derpibooru', value: 'booru_derpibooru' },
+	{ name: 'realbooru', value: 'booru_realbooru' },
+];
+
 const hentaiRedditPorn = [
 	'hentai',
 	'yuri',
@@ -69,4 +115,4 @@ const irlPorn = [
 	'Slut',
 ];
 
-module.exports = { hentaiAkanekoPorn, hentaiRedditPorn, irlPorn };
+module.exports = { hentaiAkanekoPorn, danbooruPorn, validBoorus, hentaiRedditPorn, irlPorn };

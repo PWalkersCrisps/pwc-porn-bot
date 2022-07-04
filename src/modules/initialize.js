@@ -7,8 +7,10 @@ module.exports = {
 		await rest.put( // This uploads onto discord's command cache, if there are no changes then nothing different should happen
 			Routes.applicationGuildCommands(BOT_CLIENT_ID, TESTING_GUILD_ID), // The route to upload the commands to
 			{ body: commands }, // The commands to upload
-		).catch(err => console.log(err)); // Log the error
-		console.log('Successfully reloaded application (/) commands.'); // Log that the application commands were successfully reloaded
+		)
+			.then(() => console.log('Successfully registered application commands.')) // Log success
+			.catch(err => console.log(err)); // Log the error
+
 	},
 
 	initializeMongooseConnection : async function() {

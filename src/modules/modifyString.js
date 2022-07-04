@@ -12,4 +12,15 @@ module.exports = {
 
 		return parseFloat((a / Math.pow(c, f)).toFixed(d)) + ' ' + e[f]; // Return the bytes in the correct format
 	},
+
+	isValidHttpUrl: function(string) {
+		let url;
+		try {
+			url = new URL(string);
+		}
+		catch (_) {
+			return false;
+		}
+		return true;
+	},
 };

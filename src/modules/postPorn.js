@@ -1,76 +1,73 @@
-const { MessageEmbed } = require('discord.js');
-const akaneko = require('akaneko');
-const randomPornTopic = require('../arrays/randomTopic.js');
-const { randomInt } = require('./random.js');
-const { isValidHttpUrl } = require('./modifyString.js');
+const { MessageEmbed, MessageActionRow, MessageButton } = require('discord.js');
 const reddit = require('random-reddit');
 
-const hentaiChannelID = '988549632500039711';
-const irlChannelID = '988877445983797298';
+const { randomInt } = require('./random.js');
+const { isValidHttpUrl } = require('./modifyString.js');
+const { checkRedgif } = require('./filter.js');
+const { booruSearch } = require('./booru.js');
+const { checkForLoli, checkBooruRating } = require('./filter.js');
+
+const { HENTAI_CHANNEL_ID, IRL_CHANNEL_ID } = require('../arrays/config.json');
+const randomPornTopic = require('../arrays/randomTopic.js');
 
 function loadAll(client, loopDelay) {
-	postAkanekoHentai(client, loopDelay);
-	postRedditHentai(client, loopDelay);
+	postDanbooruHentai(client, loopDelay);
 	postRedditNSFW(client, loopDelay);
 }
-async function checkRedgif(checkURL) {
-	let newImageURL = checkURL;
-	const subreddit = randomPornTopic.irlPorn;
-	while (newImageURL.includes('redgifs.com')) {
-		newImageURL = await reddit.getImage(subreddit);
-	}
-	return newImageURL;
-}
-async function postAkanekoHentai(client, loopDelay) {
-	setTimeout(async function() {
-		const topic = await randomPornTopic.hentaiAkanekoPorn[randomInt(0, randomPornTopic.hentaiAkanekoPorn.length)];
 
-		const imageURL = await topic || akaneko.nsfw.hentai();
-		const footerText = 'Hentai';
+async function postDanbooruHentai(client, loopDelay) {
+	setTimeout(async function() {
+		const topic = await randomPornTopic.danbooruPorn[randomInt(0, randomPornTopic.danbooruPorn.length)];
+		const posts = await booruSearch('danbooru', topic, 15, true);
+
+		const { allowedPosts } = checkForLoli(checkBooruRating(posts, ['q', 'e']).allowedPosts);
+
+		if (allowedPosts.length === 0) { return postDanbooruHentai(client, loopDelay); }
 
 		const embed = new MessageEmbed()
 			.setColor('RANDOM')
 			.setTimestamp()
-			.setFooter({ text: `${await footerText}` })
-			.setImage(String(await imageURL));
+			.setImage(allowedPosts[0].file_url);
 
-		client.channels.fetch(hentaiChannelID).then(channel => channel.send({ embeds: [embed] }));
-		postAkanekoHentai(client, loopDelay);
-	}, (loopDelay + randomInt(10, 50)) * 1000);
+		const actionRow = new MessageActionRow()
+			.addComponents(
+				new MessageButton()
+					.setLabel('View')
+					.setStyle('LINK')
+					.setURL(allowedPosts[0].postView),
+			);
+
+		client.channels.fetch(HENTAI_CHANNEL_ID).then(channel => channel.send({ embeds: [embed], components: [actionRow] }));
+		postDanbooruHentai(client, loopDelay);
+	}, (loopDelay * 1000));
 }
-async function postRedditHentai(client, loopDelay) {
-	setTimeout(async function() {
-		const subreddit = randomPornTopic.hentaiRedditPorn;
 
-		let imageURL = await reddit.getImage(subreddit);
-		if (!isValidHttpUrl(imageURL)) { imageURL = await akaneko.nsfw.hentai(); }
-		const footerText = 'Hentai';
-
-		const embed = new MessageEmbed()
-			.setColor('RANDOM')
-			.setTimestamp()
-			.setFooter({ text: `${await footerText}` })
-			.setImage(await imageURL);
-		client.channels.fetch(hentaiChannelID).then(channel => channel.send({ embeds: [embed] }));
-		postRedditHentai(client, loopDelay);
-	}, loopDelay * 1000);
-}
 async function postRedditNSFW(client, loopDelay) {
 	setTimeout(async function() {
 		const subreddit = randomPornTopic.irlPorn;
 
-		const imageURL = await checkRedgif(await reddit.getImage(subreddit));
-		if (!isValidHttpUrl(imageURL)) { return; }
-		const footerText = 'Porn';
+		const post = await checkRedgif(await reddit.getPost(subreddit));
+		if (!isValidHttpUrl(post.url)) { return; }
 
 		const embed = new MessageEmbed()
+			.setTitle(post.title)
+			.setImage(post.url)
 			.setColor('RANDOM')
 			.setTimestamp()
-			.setFooter({ text: `${await footerText}` })
-			.setImage(await imageURL);
-		client.channels.fetch(irlChannelID).then(channel => channel.send({ embeds: [embed] }));
+			.setFooter({ text: `${post.subreddit_name_prefixed}`, url: `https://reddit.com/${post.subreddit_name_prefixed}` });
+
+		const actionRow = new MessageActionRow()
+			.addComponents(
+				new MessageButton()
+					.setLabel('View')
+					.setStyle('LINK')
+					.setURL(`https://reddit.com/${post.subreddit_name_prefixed}`),
+			);
+
+		client.channels.fetch(IRL_CHANNEL_ID).then(channel => channel.send({ embeds: [embed], components: [actionRow] }));
 		postRedditNSFW(client, loopDelay);
 	}, loopDelay * 1000);
 }
 
-module.exports = { loadAll, postAkanekoHentai, postRedditHentai, postRedditNSFW };
+
+module.exports = { loadAll, postDanbooruHentai, postRedditNSFW };
