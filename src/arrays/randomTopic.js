@@ -1,35 +1,3 @@
-const akaneko = require('akaneko');
-const ansfw = akaneko.nsfw;
-
-const hentaiAkanekoPorn = [
-	ansfw.ass(),
-	ansfw.bdsm(),
-	ansfw.blowjob(),
-	ansfw.cum(),
-	ansfw.doujin(),
-	ansfw.feet(),
-	ansfw.femdom(),
-	ansfw.foxgirl(),
-	ansfw.gifs(),
-	ansfw.glasses(),
-	ansfw.hentai(),
-	ansfw.netorare(),
-	ansfw.maid(),
-	ansfw.masturbation(),
-	ansfw.mobileWallpapers(),
-	ansfw.orgy(),
-	ansfw.panties(),
-	ansfw.pussy(),
-	ansfw.school(),
-	ansfw.succubus(),
-	ansfw.tentacles(),
-	ansfw.thighs(),
-	ansfw.uniform(),
-	ansfw.wallpapers(),
-	ansfw.yuri(),
-	ansfw.zettaiRyouiki(),
-];
-
 const danbooruPorn = [
 	'ass',
 	'bdsm',
@@ -59,37 +27,6 @@ const danbooruPorn = [
 	'zettaiRyouiki',
 ];
 
-const validBoorus = [
-	{ name: 'e621', value: 'booru_e621' },
-	{ name: 'e926', value: 'booru_e926' },
-	{ name: 'hypnohub', value: 'booru_hypnohub' },
-	{ name: 'danbooru', value: 'booru_danbooru' },
-	{ name: 'konachan', value: 'booru_konachan' },
-	{ name: 'yande', value: 'booru_yande' },
-	{ name: 'gelbooru', value: 'booru_gelbooru' },
-	{ name: 'rule34', value: 'booru_rule34' },
-	{ name: 'safebooru', value: 'booru_safebooru' },
-	{ name: 'tbib', value: 'booru_tbib' },
-	{ name: 'xbooru', value: 'booru_xbooru' },
-	{ name: 'rule34paheal', value: 'booru_rule34paheal' },
-	{ name: 'derpibooru', value: 'booru_derpibooru' },
-	{ name: 'realbooru', value: 'booru_realbooru' },
-];
-
-const hentaiRedditPorn = [
-	'hentai',
-	'yuri',
-	'Tomboy_Hentai',
-	'Masturbation_Hentai',
-	'rule34',
-	'HENTAI_GIF',
-	'catgirlhentai',
-	'FlatChestHentai',
-	'Nekomimi',
-	'YuriHentai',
-	'hentaifemdom',
-];
-
 const irlPorn = [
 	'gonewild',
 	'BiggerThanYouThought',
@@ -115,4 +52,4 @@ const irlPorn = [
 	'Slut',
 ];
 
-module.exports = { hentaiAkanekoPorn, danbooruPorn, validBoorus, hentaiRedditPorn, irlPorn };
+module.exports = { danbooruPorn, irlPorn };

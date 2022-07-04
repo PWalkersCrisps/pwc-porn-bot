@@ -4,8 +4,4 @@ const loliFilter = [
 	'shotacon',
 ];
 
-const foo = [
-	'bar',
-];
-
 module.exports = { loliFilter };
