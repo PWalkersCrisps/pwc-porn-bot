@@ -13,9 +13,9 @@ const client = new Client({ // Create a new Discord client
 
 module.exports = { client }; // Exports the client
 client.commands = new Collection(); // Creates a new collection to put all of the commands in
-client.categories = readdirSync(resolve('./src/commands')); // Makes the sub-directories in ./commands/* into their own categories
+client.categories = readdirSync(resolve('./commands')); // Makes the sub-directories in ./commands/* into their own categories
 ['command', 'event'].forEach((handler) => {
-	require(resolve(`./src/handlers/${handler}`))(client); // For each of the two handlers, require the handler file and run it
+	require(resolve(`./handlers/${handler}`))(client); // For each of the two handlers, require the handler file and run it
 });
 
 client.login(process.env.BOT_TOKEN); // Discord Client Login
