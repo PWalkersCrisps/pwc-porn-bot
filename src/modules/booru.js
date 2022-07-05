@@ -6,7 +6,7 @@ async function booruSearch(site, tags, limit = 1, random = true) {
 		posts = await Booru.search(site, tags, { limit, random });
 	}
 	catch (error) {
-		console.error(error);
+		return;
 	}
 	return posts;
 }

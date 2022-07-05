@@ -3,7 +3,7 @@ const { Routes } = require('discord-api-types/v9');
 const { BOT_CLIENT_ID, TESTING_GUILD_ID } = require('./arrays/config.json'); // Import the client ID and guild ID from the config file
 const fs = require('fs'); // Import the file system module
 
-const { client } = require('../index.js');
+const { client } = require('./index.js');
 const commands = client.data;
 
 require('dotenv').config(); // Loads the .env file

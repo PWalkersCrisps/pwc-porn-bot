@@ -1,5 +1,5 @@
 const { version: djsversion, MessageEmbed } = require('discord.js');
-const { usagePercent } = require('cpu-stat');
+
 const moment = require('moment');
 const { platform, cpus } = require('os');
 
@@ -22,9 +22,6 @@ module.exports = {
 	description: 'Displays indept information about the bot.',
 	async execute(client, interaction, MessageActionRow, MessageButton) {
 
-		const { error, percent, seconds } = usagePercent();
-
-		if (error) { return console.error(error); }
 		const embed = new MessageEmbed()
 			.setThumbnail(client.user.displayAvatarURL({ dynamic: true, size: 512 }))
 			.setColor(interaction.guild.members.cache.get(client.user.id).displayHexColor)

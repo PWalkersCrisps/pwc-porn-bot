@@ -3,7 +3,7 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 module.exports = [
 	new SlashCommandBuilder()
 		.setName('booru')
-		.setDescription('nsfw')
+		.setDescription('Search for a random image from a booru')
 		.addStringOption(option =>
 			option.setName('boorus')
 				.setDescription('Choose specific boorus')
@@ -30,8 +30,30 @@ module.exports = [
 				.setRequired(true)),
 
 	new SlashCommandBuilder()
+		.setName('reddit')
+		.setDescription('Search for a random image from a subreddit')
+		.addStringOption(option =>
+			option.setName('subreddit')
+				.setDescription('Subreddit to search')
+				.setRequired(true)),
+
+	new SlashCommandBuilder()
 		.setName('botinfo')
 		.setDescription('Get information about the bot'),
+
+	new SlashCommandBuilder()
+		.setName('help')
+		.setDescription('Get information on the bot\'s commands')
+		.addStringOption(option =>
+			option.setName('command')
+				.setDescription('Choose a command to get information on')
+				.addChoices(
+					{ name: 'booru', value: 'booru' },
+					{ name: 'botinfo', value: 'botinfo' },
+					{ name: 'help', value: 'help' },
+					{ name: 'ping', value: 'ping' },
+					{ name: 'uptime', value: 'uptime' },
+				)),
 
 	new SlashCommandBuilder()
 		.setName('ping')

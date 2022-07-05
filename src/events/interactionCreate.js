@@ -1,5 +1,5 @@
 const { MessageEmbed, MessageActionRow, MessageButton } = require('discord.js'); // Import the MessageEmbed, MessageActionRow, and MessageButton modules from discord.js
-const { client } = require('../../index.js');
+const { client } = require('../index.js');
 
 module.exports = {
 	name: 'interactionCreate',

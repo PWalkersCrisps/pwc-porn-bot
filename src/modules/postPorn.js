@@ -44,24 +44,24 @@ async function postDanbooruHentai(client, loopDelay) {
 
 async function postRedditNSFW(client, loopDelay) {
 	setTimeout(async function() {
-		const subreddit = randomPornTopic.irlPorn;
+		const subreddits = randomPornTopic.irlPorn;
 
-		const post = await checkRedgif(await reddit.getPost(subreddit));
-		if (!isValidHttpUrl(post.url)) { return; }
+		const post = await checkRedgif(await reddit.getPost(subreddits), subreddits);
+		if (!isValidHttpUrl(post.url)) { return postRedditNSFW(client, loopDelay); }
 
 		const embed = new MessageEmbed()
 			.setTitle(post.title)
 			.setImage(post.url)
 			.setColor('RANDOM')
 			.setTimestamp()
-			.setFooter({ text: `${post.subreddit_name_prefixed}`, url: `https://reddit.com/${post.subreddit_name_prefixed}` });
+			.setFooter({ text: `${post.subreddit_name_prefixed}` });
 
 		const actionRow = new MessageActionRow()
 			.addComponents(
 				new MessageButton()
 					.setLabel('View')
 					.setStyle('LINK')
-					.setURL(`https://reddit.com/${post.subreddit_name_prefixed}`),
+					.setURL(`https://reddit.com/${post.permalink}`),
 			);
 
 		client.channels.fetch(IRL_CHANNEL_ID).then(channel => channel.send({ embeds: [embed], components: [actionRow] }));
