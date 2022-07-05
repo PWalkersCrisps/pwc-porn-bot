@@ -18,8 +18,8 @@ module.exports = {
 				version: '9', // Set the REST client's version to 9
 			}).setToken(process.env.BOT_TOKEN); // Set the REST client's token to the bot's token
 
-			console.log('Started refreshing application (/) commands.') // Log that the application commands are being refreshed
-				.then(async () => await rest.put(Routes.applicationGuildCommands(BOT_CLIENT_ID), { body: commands }))
+			console.log('Started refreshing application (/) commands.'); // Log that the application commands are being refreshed
+			await rest.put(Routes.applicationCommands(BOT_CLIENT_ID), { body: commands }) // Push the commands to the application
 				.then(() => console.log('Successfully registered application commands.')) // Log success
 				.catch(err => console.log(err)); // Log the error
 

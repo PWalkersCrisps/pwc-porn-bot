@@ -17,6 +17,6 @@ for (const file of commandFiles) { // Loop through all files in the commands fol
 
 const rest = new REST({ version: '9' }).setToken(process.env.BOT_TOKEN); // Set's rest client to use the bot's token
 
-rest.put(Routes.applicationGuildCommands(BOT_CLIENT_ID), { body: commands }) // Push the commands to the guild
+rest.put(Routes.applicationCommands(BOT_CLIENT_ID), { body: commands }) // Push the commands to the guild
 	.then(() => console.log('Successfully registered application commands.')) // Log success
 	.catch(console.error); // Log error
