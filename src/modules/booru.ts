@@ -1,74 +1,59 @@
-import { search } from 'booru';
+import { search, SearchResults } from 'booru';
 import filters from '../data/filters.json';
+import guildSchema from '../models/guildSchema';
 export = {
-    search: async function(site: string, tags: string | string[], limit = 1, random = true) {
-        let posts;
+    search: async function(site: string, tags: string | string[], random = true): Promise<void | BooruPost> {
         try {
-            posts = await Promise.race([
-                await search(site, tags, { limit, random }),
-                new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 10000)),
-            ]);
+            const searchResults: SearchResults = await search(site, tags, { limit: 1, random });
+            const post = this.filter(searchResults[0] as BooruPost);
+
+            if (!post) {
+                return this.search(site, tags, random);
+            }
+
+            return post;
         }
         catch (error) {
-            this.shutTheFuckUpErrors(error);
+            return console.error(error);
+        }
+    },
+    filter: function(post: BooruPost): BooruPost | undefined {
+
+        const blacklistedTags: string[] = filters;
+
+        if (!(post)) {
             return;
         }
 
-        try {
-            return this.filter(posts);
+        // check if post has any blacklisted tags
+        let blacklisted = false;
+        for (const tag of blacklistedTags) {
+            if (post.tags.includes(tag)) {
+                blacklisted = true;
+            }
         }
-        catch (error) {
-            console.error(error);
+
+        return post;
+    },
+    guildFilter: async function(guildID: string, post: BooruPost): Promise<BooruPost | undefined> {
+
+        const guild: GuildDocument | null = await guildSchema.findOne({ guildID: guildID });
+
+        if (!guild) {
             return;
         }
-    },
-    filter: async function(rawPost: any | Array<any>) {
 
-        const allowedPosts: Array<any> = [];
-        const blacklistedTags = filters;
-
-        if (rawPost === undefined) return null;
-        if (rawPost === null) return null;
-        if (rawPost.length === 0) return null;
-
-        try {
-            await rawPost.forEach((post: any) => {
-                let blacklisted = false;
-                blacklistedTags.forEach((tag: string) => {
-                    if (post.tags.includes(tag)) {
-                        blacklisted = true;
-                    }
-                });
-                if (!blacklisted) {
-                    allowedPosts.push(post);
-                }
-            });
+        // check if post has any blacklisted tags
+        let blacklisted = false;
+        for (const tag of guild.tagBlacklist) {
+            if (post.tags.includes(tag)) {
+                blacklisted = true;
+            }
         }
-        catch (error) {
-            console.error(error);
-            return null;
-        }
-
-        if (allowedPosts.length === 0) {
-            return null;
-        }
-        else {
-            return allowedPosts[0];
-        }
-    },
-
-    shutTheFuckUpErrors: async function(error: string) {
-        const ignoreError = [
-            'BooruError: Received HTTP 500 from booru: \'ActiveRecord::QueryCanceled\'',
-        ];
-
-        if (ignoreError.includes(error)) {
+        if (blacklisted) {
             return;
         }
-        else {
-            console.error(error);
-        }
+
+        return post;
     },
-
-
 }

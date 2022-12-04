@@ -7,25 +7,19 @@ import tags from '../data/tags.json';
 export = {
     postToPremiumServer: async function(client: any, loopDelay: number) {
 
-        let post: any;
-        try {
-            post = await booru.search('danbooru', tags[Math.floor(Math.random() * tags.length)], 10);
+        const post: BooruPost | void = await booru.search('gelbooru', tags[Math.floor(Math.random() * tags.length)]);
 
-            if (post === null || post === undefined) {
-                this.postToPremiumServer(client, loopDelay);
-                return;
-            }
-        }
-        catch (error) {
-            console.error(error);
+        if (post === undefined) {
+            this.postToPremiumServer(client, loopDelay);
+            return;
         }
 
 
-        const embed = new EmbedBuilder()
+        const embed: EmbedBuilder = new EmbedBuilder()
             .setColor(0x00ff00)
             .setImage(await post.fileUrl);
 
-        const row = new ActionRowBuilder<ButtonBuilder>()
+        const row: ActionRowBuilder<ButtonBuilder> = new ActionRowBuilder<ButtonBuilder>()
             .addComponents(
                 new ButtonBuilder()
                     .setStyle(ButtonStyle.Link)
@@ -37,35 +31,15 @@ export = {
                     .setCustomId('delete')
             );
 
-        guildSchema.find({ premium: true }, async (err: any, guilds: any) => {
-            if (err) throw err;
-            guilds.forEach(async (guild: any) => {
-                if (guild.autoPostChannel) {
+        const guilds: GuildDocument[] = await guildSchema.find({ premium: true });
 
-                    // dont post if the guild has the tags blacklisted
-                    let blacklisted = false;
-                    guild.autoPostBlacklist.forEach((tag: string) => {
-                        if (post.tags.includes(tag)) {
-                            blacklisted = true;
-                        }
-                    });
-                    if (blacklisted) {
-                        this.postToPremiumServer(client, loopDelay);
-                        return;
-                    }
-
-                    const channel = await client.channels.fetch(guild.autoPostChannel);
-                    if (!channel) this.postToPremiumServer(client, loopDelay);
-
-                    try {
-                        await channel.send({ embeds: [embed], components: [row] });
-                    }
-                    catch (_) {
-                        console.log('Failed to post to channel');
-                    }
-                }
-            });
+        guilds.forEach(async (guild: GuildDocument) => {
+            const channel = await client.channels.fetch(guild.autoPostChannel);
+            if (channel) {
+                channel.send({ embeds: [embed], components: [row] });
+            }
         });
+
         setTimeout(() => {
             this.postToPremiumServer(client, loopDelay);
         }, loopDelay * 1000);
