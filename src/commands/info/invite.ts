@@ -3,7 +3,7 @@ import { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } from 'disc
 export = {
     name: 'invite',
     description: 'Invite the bot to your server',
-    async execute(interaction: any) {
+    async execute(client: any, interaction: any) {
         const embed: EmbedBuilder = new EmbedBuilder()
             .setTitle('Invite the bot to your server')
             .setDescription('Click the button below to invite the bot to your server')

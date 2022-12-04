@@ -4,7 +4,7 @@ import { EmbedBuilder } from 'discord.js';
 module.exports = {
     name: 'uptime',
     description: 'Check how long has the bot been online.',
-    async execute(client: any, interaction: any, profileData: any) {
+    async execute(client: any, interaction: any) {
 
         const duration = time.parseDur(client.uptime);
         const pEmbed: EmbedBuilder = new EmbedBuilder()

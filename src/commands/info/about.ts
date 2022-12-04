@@ -3,7 +3,7 @@ import { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } from 'disc
 export = {
     name: 'about',
     description: 'About the bot',
-    async execute(interaction: any) {
+    async execute(client: any, interaction: any) {
         const embed: EmbedBuilder = new EmbedBuilder()
             .setTitle('About the bot')
             .addFields(

@@ -6,7 +6,7 @@ import random from '../../modules/random';
 module.exports = {
     name: 'help',
     description: 'Help command',
-    async execute(client: any, interaction: any, profileData: any) {
+    async execute(client: any, interaction: any) {
 
 
         const commandChosen = interaction.options.getString('command');

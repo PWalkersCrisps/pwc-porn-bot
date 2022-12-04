@@ -10,7 +10,7 @@ import { botOwner, botDeveloper } from '../../data/config.json';
 module.exports = {
     name: 'botinfo',
     description: 'Displays indept information about the bot.',
-    async execute(client: any, interaction: any, profileData: any) {
+    async execute(client: any, interaction: any) {
 
 
         const generalInfo = {
