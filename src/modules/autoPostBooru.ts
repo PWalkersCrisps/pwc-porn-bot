@@ -7,13 +7,12 @@ import tags from '../data/tags.json';
 export = {
     postToPremiumServer: async function(client: any, loopDelay: number) {
 
-        const post: BooruPost | void = await booru.search('gelbooru', tags[Math.floor(Math.random() * tags.length)]);
+        const post: BooruPost | void = await booru.search('danbooru', tags[Math.floor(Math.random() * tags.length)]);
 
         if (post === undefined) {
             this.postToPremiumServer(client, loopDelay);
             return;
         }
-
 
         const embed: EmbedBuilder = new EmbedBuilder()
             .setColor(0x00ff00)

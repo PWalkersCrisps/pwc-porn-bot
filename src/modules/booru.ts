@@ -5,7 +5,7 @@ export = {
     search: async function(site: string, tags: string | string[], random = true): Promise<void | BooruPost> {
         try {
             const searchResults: SearchResults = await search(site, tags, { limit: 1, random });
-            const post = this.filter(searchResults[0] as BooruPost);
+            const post = this.tagFilter(searchResults[0] as BooruPost);
 
             if (!post) {
                 return this.search(site, tags, random);
@@ -17,7 +17,7 @@ export = {
             return console.error(error);
         }
     },
-    filter: function(post: BooruPost): BooruPost | undefined {
+    tagFilter: function(post: BooruPost): BooruPost | undefined {
 
         const blacklistedTags: string[] = filters;
 
