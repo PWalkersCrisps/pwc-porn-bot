@@ -7,7 +7,7 @@ module.exports = {
     description: 'Searches for a random image depending on your choices',
     async execute(client: any, interaction: any) {
         if (!interaction.channel.nsfw) {
-            const embed = new EmbedBuilder()
+            const embed: EmbedBuilder = new EmbedBuilder()
                 .setTitle('Error')
                 .setDescription('This command can only be used in NSFW channels')
                 .setColor(0xff0000);
@@ -18,18 +18,11 @@ module.exports = {
         const site = interaction.options.getString('booruchoice') ?? 'danbooru';
         const tags = interaction.options.getString('tags') ?? 'boobs';
 
-        let post;
         const guildData = guildSchema.findOne({ guildID: interaction.guild.id });
-
-        try {
-            post = await booru.search(site, tags, 15);
-            if (post === null) return;
-
-            // Check if the post tags contain the guild blacklisted tags
-
-        }
-        catch (error) {
-            const embed = new EmbedBuilder()
+        const post = await booru.search(site, tags, 15);
+        if (post === null) { return; }
+        else if (!post) {
+            const embed: EmbedBuilder = new EmbedBuilder()
                 .setTitle('Error')
                 .setDescription('No results found')
                 .setColor(0xff0000);
@@ -37,10 +30,11 @@ module.exports = {
             return interaction.reply({ embeds: [embed] });
         }
 
-        const embed = new EmbedBuilder()
+
+        const embed: EmbedBuilder = new EmbedBuilder()
             .setImage(await post.fileUrl);
 
-        const row = new ActionRowBuilder<ButtonBuilder>()
+        const row: ActionRowBuilder<ButtonBuilder> = new ActionRowBuilder<ButtonBuilder>()
             .addComponents(
                 new ButtonBuilder()
                     .setStyle(ButtonStyle.Link)
@@ -51,7 +45,6 @@ module.exports = {
                     .setLabel('⚠️')
                     .setCustomId('delete')
             );
-
 
         interaction.reply({ embeds: [embed], components: [row] });
 
