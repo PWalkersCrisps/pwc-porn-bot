@@ -5,9 +5,8 @@ import { readdirSync } from 'fs'; // Import the readdirSync module from fs
 import { resolve } from 'path'; // Import the resolve module from path
 import { connect } from 'mongoose';
 
-
-import * as dotenv from 'dotenv';
-dotenv.config();
+import { config } from 'dotenv';
+config();
 
 declare module 'discord.js' {
     export interface Client {

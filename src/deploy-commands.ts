@@ -7,10 +7,8 @@ import { readdirSync } from 'fs'; // Import the file system module
 import index from './index'; // Import the client from the index file
 const commands = index.client.data;
 
-import * as dotenv from 'dotenv';
-dotenv.config(); // Loads the .env file
-
-const args = process.argv.slice(2);
+import { config } from 'dotenv';
+config(); // Loads the .env file
 
 const commandFiles = readdirSync('./commands').filter(file => file.endsWith('')); // Get all files in commands folder
 
