@@ -4,7 +4,7 @@ module.exports = {
 	'apps': [
 		{
 			'name': 'pwc-porn-bot',
-			'script': './src/index.js',
+			'script': './build/index.js',
 			'watch': true,
 			'env': {
 				'NODE_ENV': 'production',
