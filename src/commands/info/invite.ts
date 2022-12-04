@@ -1,6 +1,6 @@
 import { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } from 'discord.js';
 
-export = {
+module.exports = {
     name: 'invite',
     description: 'Invite the bot to your server',
     async execute(client: any, interaction: any) {

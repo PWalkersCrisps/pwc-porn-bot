@@ -1,6 +1,6 @@
 import { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } from 'discord.js';
 
-export = {
+module.exports = {
     name: 'about',
     description: 'About the bot',
     async execute(client: any, interaction: any) {
