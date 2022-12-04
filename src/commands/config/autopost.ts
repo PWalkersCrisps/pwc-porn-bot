@@ -9,7 +9,7 @@ module.exports = {
 
         // Check if channel is NSFW
         if (!channel.nsfw) {
-            const embed = new EmbedBuilder()
+            const embed: EmbedBuilder = new EmbedBuilder()
                 .setTitle('Error')
                 .setDescription('This command can only be used for NSFW channels')
                 .setColor(0xff0000);
@@ -21,7 +21,7 @@ module.exports = {
 
         const guildData = await guildSchema.findOneAndUpdate({ guildID }, { autoPostChannel: channel.id }, { upsert: true, new: true });
 
-        const embed = new EmbedBuilder()
+        const embed: EmbedBuilder = new EmbedBuilder()
             .setTitle('Success')
             .setDescription('Channel set to automatically post a random image from a booru')
             .setColor(0x00ff00);

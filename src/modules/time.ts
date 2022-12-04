@@ -1,5 +1,5 @@
 export = {
-    parseDur: function(ms: number) {
+    parseDur: function(ms: number): string {
         let seconds = ms / 1000; // Convert to seconds
 
         const days = Math.floor(seconds / 86400); // Get the number of days
@@ -23,10 +23,15 @@ export = {
         return `${seconds} second(s)`; // Return the seconds
     },
 
-    currentTime : function() {
+    currentTime : function(): string {
         const date = new Date().toLocaleDateString(); // Get the current date
         const time = new Date().toLocaleTimeString(); // Get the current time
         const currentDate = date + ' @ ' + time; // Combine the date and time
         return currentDate; // Return the current date and time
     },
+
+    date: new Date().toLocaleDateString(),
+    time: new Date().toLocaleTimeString(),
+    currentDate: new Date().toLocaleDateString() + ' @ ' + new Date().toLocaleTimeString(),
+
 };

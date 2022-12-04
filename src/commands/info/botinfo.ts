@@ -38,7 +38,7 @@ module.exports = {
                     **💻 CPU: ${cpus()[0].model.split('CPU')[0]}${cpus().length} Cores ${cpus()[0].model.split('CPU ')[1]}**`,
         };
 
-        const embed = new EmbedBuilder()
+        const embed: EmbedBuilder = new EmbedBuilder()
             .setThumbnail(client.user.displayAvatarURL({ dynamic: true, size: 512 }))
             .setColor(interaction.guild.members.cache.get(client.user.id).displayHexColor)
             .setFooter({ text: `Requested by ${interaction.user.tag}` })

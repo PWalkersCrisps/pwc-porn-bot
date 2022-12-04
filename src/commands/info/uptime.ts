@@ -7,7 +7,7 @@ module.exports = {
     async execute(client: any, interaction: any, profileData: any) {
 
         const duration = time.parseDur(client.uptime);
-        const pEmbed = new EmbedBuilder()
+        const pEmbed: EmbedBuilder = new EmbedBuilder()
             .setTitle(':inbox_tray: Online for')
             .setColor(0x0000ff)
             .setDescription(

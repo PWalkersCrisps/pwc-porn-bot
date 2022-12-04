@@ -6,7 +6,7 @@ module.exports = {
     async execute(client: any, interaction: any, profileData: any) {
 
         interaction.reply('🏓 Pinging....').then(() => {
-            const pEmbed = new EmbedBuilder()
+            const pEmbed: EmbedBuilder = new EmbedBuilder()
                 .setTitle('🏓 Pong!')
                 .setColor(0x0000ff)
                 .setDescription(

@@ -4,7 +4,7 @@ export = {
     name: 'about',
     description: 'About the bot',
     async execute(interaction: any) {
-        const embed = new EmbedBuilder()
+        const embed: EmbedBuilder = new EmbedBuilder()
             .setTitle('About the bot')
             .addFields(
                 { name: 'How do I use this bot?', value: 'You can use `/help` to get a list of commands.' },

@@ -38,7 +38,7 @@ function getHelpCategories(interaction: any) {
 
     });
 
-    const embed = new EmbedBuilder()
+    const embed: EmbedBuilder = new EmbedBuilder()
         .setTitle('Commands')
         .setDescription('Use `/help [command]` to get more info about a command')
         .setFooter({ text: `Requested by ${interaction.user.username}`, iconURL: interaction.user.avatarURL({ dynamic: true }) })
@@ -50,7 +50,7 @@ function getHelpCategories(interaction: any) {
 
 function getHelpCommand(client: any, interaction: any, commandChosen: string) {
     const command = client.commands.get(commandChosen);
-    const embed = new EmbedBuilder()
+    const embed: EmbedBuilder = new EmbedBuilder()
         .setTitle('Command Details')
         .addFields(
             { name: 'Command:', value: command.name ? `\`${command.name}\`` : 'No name for this command' },

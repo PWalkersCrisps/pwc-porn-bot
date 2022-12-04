@@ -5,9 +5,15 @@ module.exports = {
     async execute(guild: any) {
         const guildID = guild.id;
 
-        const guildData = await guildSchema.findOne({ guildID: guildID });
-        if (guildData) return;
-        await guildSchema.create({ guildID }, { upsert: true });
-
+        const guildData: GuildDocument | null = await guildSchema.findOneAndUpdate(
+            {
+                guildID: guildID,
+            },
+            {},
+            {
+                upsert: true,
+                new: true,
+            }
+        );
     },
 };

@@ -5,16 +5,16 @@ import { REST, Routes } from 'discord.js';
 import autoPostBooru from '../modules/autoPostBooru';
 
 import commands = require('../data/interactionCommands');
-import globalVariables from '../modules/globalVariables';
-import * as dotenv from 'dotenv';
-dotenv.config();
+import time from '../modules/time';
+import { config } from 'dotenv';
+config();
 
 module.exports = {
     name: 'ready',
     once: true,
     async execute(client: any) {
         try {
-            const readyMessage = `${ globalVariables.currentDate } ${ client.user.tag } is online, hopefully it works`;
+            const readyMessage = `${ time.currentDate } ${ client.user.tag } is online, hopefully it works`;
 
             console.log(readyMessage);
 
@@ -22,19 +22,19 @@ module.exports = {
                 version: '9',
             }).setToken(process.env.BOT_TOKEN as string);
 
-            console.log(`${ globalVariables.currentDate } Started refreshing application (/) commands.`);
+            console.log(`${ time.currentDate } Started refreshing application (/) commands.`);
 
             await rest.put(
                 Routes.applicationCommands(clientID),
                 { body: commands },
             );
 
-            console.log(`${ globalVariables.currentDate } Successfully reloaded application (/) commands.`);
+            console.log(`${ time.currentDate } Successfully reloaded application (/) commands.`);
 
             autoPostBooru.postToPremiumServer(client, 10);
         }
         catch (error) {
-            console.error(`${globalVariables.currentDate} ready error: ${error}`);
+            console.error(`${time.currentDate} ready error: ${error}`);
         }
     },
 };

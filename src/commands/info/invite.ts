@@ -4,7 +4,7 @@ export = {
     name: 'invite',
     description: 'Invite the bot to your server',
     async execute(interaction: any) {
-        const embed = new EmbedBuilder()
+        const embed: EmbedBuilder = new EmbedBuilder()
             .setTitle('Invite the bot to your server')
             .setDescription('Click the button below to invite the bot to your server')
             .setColor(0x00ff00);

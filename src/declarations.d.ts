@@ -1,17 +1,29 @@
 declare module 'ascii-table';
 declare module 'weighted-random';
 
-interface Card {
-    suit: string,
-    label: string,
-    value: number,
-    emoji: string
+interface GuildDocument {
+    guildId: string;
+    registeredAt: Date;
+    premium: boolean;
+    autoPostChannel: string;
+    tagBlacklist: string[];
 }
-interface player {
-    cards: Card[],
-    value: number[],
+
+
+interface ProfileDocument {
+    userId: string;
+    registeredAt: Date;
+    interactionsCreated: number;
 }
-interface dealer {
-    cards: Card[],
-    value: number[],
+
+interface BooruPost {
+    fileUrl: string,
+    id: string,
+    tags: string[],
+    score: number,
+    source: string,
+    rating: string,
+    createdAt: Date,
+    postView: string,
 }
+

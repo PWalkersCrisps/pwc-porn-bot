@@ -7,36 +7,35 @@ module.exports = {
     async execute(interaction: any) {
         try {
             if (interaction.isCommand()) {
-                const command = index.client.commands.get(interaction.commandName); // Get the command from the client's commands collection
+                const command: any = index.client.commands.get(interaction.commandName); // Get the command from the client's commands collection
 
                 if (!command) return; // If the command is not found, return
 
                 // Check and create a profile for the user
-                await profileSchema.findOneAndUpdate(
+                const profileData: ProfileDocument | null = await profileSchema.findOneAndUpdate(
                     {
                         userID: interaction.user.id,
                     },
                     {
-                        userID: interaction.user.id,
                         $inc: {
                             interactionsCreated: 1,
                         },
                     },
                     {
                         upsert: true,
+                        new: true,
                     }
                 );
 
                 // Check and create a profile for the guild
-                await guildSchema.findOneAndUpdate(
+                const guildData: GuildDocument | null = await guildSchema.findOneAndUpdate(
                     {
                         guildID: interaction.guild.id,
                     },
-                    {
-                        guildID: interaction.guild.id,
-                    },
+                    {},
                     {
                         upsert: true,
+                        new: true,
                     }
                 );
 

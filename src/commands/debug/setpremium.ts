@@ -5,7 +5,7 @@ module.exports = {
     description: 'Set a server as premium',
     async execute(client: any, interaction: any) {
         if (!(interaction.user.id === '426455031571677197')) {
-            const embed = new EmbedBuilder()
+            const embed: EmbedBuilder = new EmbedBuilder()
                 .setTitle('Error')
                 .setDescription('You are not allowed to use this command')
                 .setColor(0xff0000);
@@ -14,9 +14,9 @@ module.exports = {
         }
         const guildID = interaction.guild.id;
 
-        const guildData = await guildSchema.findOneAndUpdate({ guildID }, { premium: true }, { upsert: true, new: true });
+        const guildData = await guildSchema.findOneAndUpdate({ guildID: guildID }, { premium: true }, { upsert: true, new: true });
 
-        const embed = new EmbedBuilder()
+        const embed: EmbedBuilder = new EmbedBuilder()
             .setTitle('Success')
             .setDescription('Server set as premium')
             .setColor(0x00ff00);
