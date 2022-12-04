@@ -9,7 +9,7 @@ jobs:
     strategy:
       fail-fast: false # tells github to not run further steps if this one fails
       matrix:
-        node-version: [12.x] # sets the version of node we want to use, should be what you have on your server
+        node-version: [19.x] # sets the version of node we want to use, should be what you have on your server
 
     steps:
       - uses: actions/checkout@v2 # fetches your commit to test it
@@ -36,7 +36,7 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           script: |
-            cd <your-app-folder> # we move into our app's folder
+            cd /root/discord/pwc-porn-bot # we move into our app's folder
             git pull # we pull any changes from git
             npm prune # we remove any unused dependencies
             npm install # we install any missing dependencies
