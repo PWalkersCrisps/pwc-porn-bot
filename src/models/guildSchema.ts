@@ -4,4 +4,5 @@ export = model('guilds', new Schema({
     registeredAt: { type: Schema.Types.Date, default: Date.now() },
     premium: { type: Schema.Types.Boolean, default: false },
     autoPostChannel: { type: Schema.Types.String, default: null },
+    autoPostBlacklist: { type: Schema.Types.Array, default: [] },
 }));

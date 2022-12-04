@@ -25,13 +25,13 @@ module.exports = {
             console.log(`${ globalVariables.currentDate } Started refreshing application (/) commands.`);
 
             await rest.put(
-                Routes.applicationGuildCommands(clientID, testingGuildID),
+                Routes.applicationCommands(clientID),
                 { body: commands },
             );
 
             console.log(`${ globalVariables.currentDate } Successfully reloaded application (/) commands.`);
 
-            autoPostBooru.postToPremiumServer(client, 15);
+            autoPostBooru.postToPremiumServer(client, 10);
         }
         catch (error) {
             console.error(`${globalVariables.currentDate} ready error: ${error}`);

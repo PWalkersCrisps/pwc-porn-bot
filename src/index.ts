@@ -17,8 +17,6 @@ declare module 'discord.js' {
     }
 }
 
-const args = process.argv.slice(2); // node start ./index [production/or anything else]
-
 connect(process.env.MONGODB_SRV as string);
 
 const client = new Client({ // Create a new Discord client

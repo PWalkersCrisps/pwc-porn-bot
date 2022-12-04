@@ -1,66 +1,67 @@
-import { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } from "discord.js";
-import { search } from "booru";
+import { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, Events } from 'discord.js';
+import booru from '../../modules/booru';
+import guildSchema from '../../models/guildSchema';
 
 module.exports = {
-    name: "booru",
-    description: "Searches for a random image depending on your choices",
+    name: 'booru',
+    description: 'Searches for a random image depending on your choices',
     async execute(client: any, interaction: any) {
         if (!interaction.channel.nsfw) {
             const embed = new EmbedBuilder()
-                .setTitle("Error")
-                .setDescription("This command can only be used in NSFW channels")
+                .setTitle('Error')
+                .setDescription('This command can only be used in NSFW channels')
                 .setColor(0xff0000);
 
             return interaction.reply({ embeds: [embed] });
         }
 
-        const site = interaction.options.getString("booru");
-        const tags = interaction.options.getString("tags");
+        const site = interaction.options.getString('booruchoice') ?? 'danbooru';
+        const tags = interaction.options.getString('tags') ?? 'boobs';
 
-        let posts;
         let post;
+        const guildData = guildSchema.findOne({ guildID: interaction.guild.id });
 
         try {
-            posts = await search('e621.net', tags);
-            post = posts[0];      
-        } 
+            post = await booru.search(site, tags, 15);
+            if (post === null) return;
+
+            // Check if the post tags contain the guild blacklisted tags
+
+        }
         catch (error) {
             const embed = new EmbedBuilder()
-                .setTitle("Error")
-                .setDescription("No results found")
+                .setTitle('Error')
+                .setDescription('No results found')
                 .setColor(0xff0000);
 
             return interaction.reply({ embeds: [embed] });
         }
 
-        
         const embed = new EmbedBuilder()
-            .setImage(post.fileUrl);
+            .setImage(await post.fileUrl);
 
         const row = new ActionRowBuilder<ButtonBuilder>()
             .addComponents(
                 new ButtonBuilder()
                     .setStyle(ButtonStyle.Link)
-                    .setLabel("View Post")
+                    .setLabel('View Post')
                     .setURL(post.postView),
                 new ButtonBuilder()
                     .setStyle(ButtonStyle.Danger)
-                    .setLabel("⚠️")
-                    .setCustomId("delete")
+                    .setLabel('⚠️')
+                    .setCustomId('delete')
             );
-        
 
-        interaction.reply('Cock');
 
-        const filter = (i: any) => i.customId === "delete";
-        const collector = interaction.channel.createMessageCollector(filter, { time: 10000 });
+        interaction.reply({ embeds: [embed], components: [row] });
 
-        collector.on("collect", async (i: any) => {
-            if (i.customId === "delete") {
-                await i.deferUpdate();
-                await i.message.delete();
+        client.on(Events.InteractionCreate, async (button: any) => {
+            if (!button.isButton()) return;
+            if (button.customId === 'delete') {
+                await button.deferUpdate();
+                await button.message.delete();
             }
         });
-        
+
     },
 };
