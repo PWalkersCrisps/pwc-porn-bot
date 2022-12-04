@@ -19,7 +19,7 @@ module.exports = {
         const tags = interaction.options.getString('tags') ?? 'boobs';
 
         const guildData = guildSchema.findOne({ guildID: interaction.guild.id });
-        const post = await booru.search(site, tags, 15);
+        const post = await booru.search(site, tags);
         if (post === null) { return; }
         else if (!post) {
             const embed: EmbedBuilder = new EmbedBuilder()
