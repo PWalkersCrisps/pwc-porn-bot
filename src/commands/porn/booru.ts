@@ -1,6 +1,6 @@
 import { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, Events } from 'discord.js';
-import booru from '../../modules/booru';
-import guildSchema from '../../models/guildSchema';
+// import booru from '../../modules/booru';
+import { search } from 'booru';
 
 module.exports = {
     name: 'booru',
@@ -20,7 +20,7 @@ module.exports = {
 
         console.log(site);
 
-        const post: BooruPost | void = await booru.search('danbooru', tags);
+        const post: any | void = (await search('danbooru', tags, { limit: 1, random: true }))[0] as BooruPost;
 
         console.log(post);
 
