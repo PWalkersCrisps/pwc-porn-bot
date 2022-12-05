@@ -18,8 +18,7 @@ module.exports = {
         const site: string = interaction.options.getString('booruchoice').toString();
         const tags: string = interaction.options.getString('tags') ?? 'boobs';
 
-        const guildData = guildSchema.findOne({ guildID: interaction.guild.id });
-        const post = await booru.search(site, tags);
+        const post = await booru.search('danbooru', tags);
         if (!post) {
             const embed: EmbedBuilder = new EmbedBuilder()
                 .setTitle('Error')
