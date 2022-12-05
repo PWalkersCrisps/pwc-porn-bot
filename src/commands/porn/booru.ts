@@ -15,8 +15,10 @@ module.exports = {
             return interaction.reply({ embeds: [embed] });
         }
 
-        const site: string = interaction.options.getString('booruchoice').toString();
-        const tags: string = interaction.options.getString('tags') ?? 'boobs';
+        const site: string = interaction.options.getString('booruchoice');
+        const tags: string = interaction.options.getString('tags');
+
+        console.log(site);
 
         const post = await booru.search('danbooru', tags);
         if (!post) {
