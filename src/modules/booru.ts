@@ -4,11 +4,11 @@ import guildSchema from '../models/guildSchema';
 export = {
     search: async function(site: string, tags: string | string[], random = true): Promise<void | BooruPost> {
         try {
-            const searchResults: any = await search(site, tags, { limit: 1, random });
+            const searchResults: SearchResults = await search(site, tags, { limit: 1, random });
             const post = this.tagFilter(searchResults[0] as BooruPost, { site, tags, random });
 
             if (!post) {
-                return this.search(site, tags, random);
+                return;
             }
 
             return post;
@@ -22,7 +22,6 @@ export = {
         const blacklistedTags: string[] = filters;
 
         if (!(post)) {
-            this.search(postOptions.site, postOptions.tags, postOptions.random);
             return;
         }
 
@@ -35,7 +34,6 @@ export = {
         }
 
         if (blacklisted) {
-            this.search(postOptions.site, postOptions.tags, postOptions.random);
             return;
         }
 
@@ -57,7 +55,6 @@ export = {
             }
         }
         if (blacklisted) {
-            this.search(postOptions.site, postOptions.tags, postOptions.random);
             return;
         }
 
@@ -66,7 +63,6 @@ export = {
     ratingFilter: function(post: BooruPost, rating: string, postOptions: { site: string, tags: string | string[], random: boolean }): BooruPost | undefined {
 
         if (post.rating !== rating) {
-            this.search(postOptions.site, postOptions.tags, postOptions.random);
             return;
         }
 
