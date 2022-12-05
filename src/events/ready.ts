@@ -31,7 +31,7 @@ module.exports = {
 
             console.log(`${ time.currentDate } Successfully reloaded application (/) commands.`);
 
-            autoPostBooru.postToPremiumServer(client, 60);
+            autoPostBooru.postToPremiumServer(client, 30);
         }
         catch (error) {
             console.error(`${time.currentDate} ready error: ${error}`);
