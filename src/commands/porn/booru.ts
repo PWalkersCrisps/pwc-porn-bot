@@ -20,7 +20,10 @@ module.exports = {
 
         console.log(site);
 
-        const post = await booru.search('danbooru', tags);
+        const post: BooruPost | void = await booru.search('danbooru', tags);
+
+        console.log(post);
+
         if (!post) {
             const embed: EmbedBuilder = new EmbedBuilder()
                 .setTitle('Error')
@@ -30,8 +33,8 @@ module.exports = {
             return interaction.reply({ embeds: [embed] });
         }
 
-
         const embed: EmbedBuilder = new EmbedBuilder()
+            .setColor(0x0000ff)
             .setImage(await post.fileUrl);
 
         const row: ActionRowBuilder<ButtonBuilder> = new ActionRowBuilder<ButtonBuilder>()
