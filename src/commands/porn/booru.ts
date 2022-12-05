@@ -47,13 +47,5 @@ module.exports = {
 
         interaction.reply({ embeds: [embed], components: [row] });
 
-        client.on(Events.InteractionCreate, async (button: any) => {
-            if (!button.isButton()) return;
-            if (button.customId === 'delete') {
-                await button.deferUpdate();
-                await button.message.delete();
-            }
-        });
-
     },
 };
