@@ -15,13 +15,12 @@ module.exports = {
             return interaction.reply({ embeds: [embed] });
         }
 
-        const site = interaction.options.getString('booruchoice') ?? 'danbooru';
-        const tags = interaction.options.getString('tags') ?? 'boobs';
+        const site: string = interaction.options.getString('booruchoice').toString();
+        const tags: string = interaction.options.getString('tags') ?? 'boobs';
 
         const guildData = guildSchema.findOne({ guildID: interaction.guild.id });
         const post = await booru.search(site, tags);
-        if (post === null) { return; }
-        else if (!post) {
+        if (!post) {
             const embed: EmbedBuilder = new EmbedBuilder()
                 .setTitle('Error')
                 .setDescription('No results found')

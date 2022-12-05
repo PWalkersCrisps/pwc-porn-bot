@@ -9,7 +9,7 @@ export = {
 
         const post: BooruPost | void = await booru.search('danbooru', tags[Math.floor(Math.random() * tags.length)]);
 
-        if (post === undefined) {
+        if (!post) {
             this.postToPremiumServer(client, loopDelay);
             return;
         }
