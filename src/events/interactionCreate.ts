@@ -1,6 +1,5 @@
 import index from '../index'; // Import the client from the index file
-import profileSchema from '../models/profileSchema';
-import guildSchema from '../models/guildSchema';
+import createDatabaseDocument = require('../modules/createDatabaseDocument');
 
 module.exports = {
     name: 'interactionCreate',
@@ -11,33 +10,8 @@ module.exports = {
 
                 if (!command) return; // If the command is not found, return
 
-                // Check and create a profile for the user
-                const profileData: ProfileDocument | null = await profileSchema.findOneAndUpdate(
-                    {
-                        userID: interaction.user.id,
-                    },
-                    {
-                        $inc: {
-                            interactionsCreated: 1,
-                        },
-                    },
-                    {
-                        upsert: true,
-                        new: true,
-                    }
-                );
-
-                // Check and create a profile for the guild
-                const guildData: GuildDocument | null = await guildSchema.findOneAndUpdate(
-                    {
-                        guildID: interaction.guild.id,
-                    },
-                    {},
-                    {
-                        upsert: true,
-                        new: true,
-                    }
-                );
+                const profileData: ProfileDocument = await createDatabaseDocument.createProfileDocument(interaction.user.id);
+                const guildData: GuildDocument = await createDatabaseDocument.createGuildDocument(interaction.guild.id);
 
                 try {
                     await command.execute(index.client, interaction); // Execute the command
