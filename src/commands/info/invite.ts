@@ -21,7 +21,7 @@ module.exports = {
                     .setURL('https://discord.com/api/oauth2/authorize?client_id=988495890077589544&permissions=2147534848&scope=bot%20applications.commands')
             );
 
-        await interaction.reply({ embeds: [embed], components: [row] });
+        interaction.reply({ embeds: [embed], components: [row] });
 
     },
 };
