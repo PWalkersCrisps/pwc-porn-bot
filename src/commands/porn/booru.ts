@@ -1,6 +1,5 @@
 import { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, Events } from 'discord.js';
-// import booru from '../../modules/booru';
-import { search } from 'booru';
+import booru from '../../modules/booru';
 
 module.exports = {
     name: 'booru',
@@ -18,11 +17,7 @@ module.exports = {
         const site: string = interaction.options.getString('booruchoice');
         const tags: string = interaction.options.getString('tags');
 
-        console.log(site);
-
-        const post: any | void = (await search('danbooru', tags, { limit: 1, random: true }))[0] as BooruPost;
-
-        console.log(post);
+        const post: BooruPost | void = await booru.search(site, tags);
 
         if (!post) {
             const embed: EmbedBuilder = new EmbedBuilder()

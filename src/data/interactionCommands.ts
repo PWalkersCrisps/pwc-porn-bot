@@ -58,7 +58,6 @@ module.exports = [
                 .addChoices(
                     { name: 'e621', value: 'e621.net' },
                     { name: 'e926', value: 'e926.net' },
-                    { name: 'danbooru', value: 'danbooru' },
                     { name: 'konachan', value: 'konachan.com' },
                     { name: 'yandere', value: 'yande.re' },
                     { name: 'gelbooru', value: 'gelbooru.com' },
