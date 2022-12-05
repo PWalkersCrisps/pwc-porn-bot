@@ -4,7 +4,7 @@ import guildSchema from '../models/guildSchema';
 export = {
     search: async function(site: string, tags: string | string[], random = true): Promise<void | BooruPost> {
         try {
-            const searchResults: SearchResults = await search(site, tags, { limit: 1, random });
+            const searchResults: any = await search(site, tags, { limit: 1, random });
             const post = this.tagFilter(searchResults[0] as BooruPost, { site, tags, random });
 
             if (!post) {
