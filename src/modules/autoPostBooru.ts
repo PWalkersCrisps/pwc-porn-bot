@@ -1,4 +1,4 @@
-import { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, Events } from 'discord.js';
+import { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ColorResolvable } from 'discord.js';
 import guildSchema from '../models/guildSchema';
 import booru from './booru';
 import tags from '../data/tags.json';
@@ -15,7 +15,7 @@ export = {
         }
 
         const embed: EmbedBuilder = new EmbedBuilder()
-            .setColor(0x00ff00)
+            .setColor('Random' as ColorResolvable)
             .setImage(await post.fileUrl);
 
         const row: ActionRowBuilder<ButtonBuilder> = new ActionRowBuilder<ButtonBuilder>()
@@ -34,6 +34,12 @@ export = {
 
         try {
             guilds.forEach(async (guild: GuildDocument) => {
+                // check if guild exists
+                const guildExists: boolean = client.guilds.cache.has(guild.guildId);
+                if (!guildExists) {
+                    return;
+                }
+
                 const channel = await client.channels.fetch(guild.autoPostChannel);
                 if (channel) {
                     channel.send({ embeds: [embed], components: [row] });
