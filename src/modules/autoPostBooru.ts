@@ -10,7 +10,10 @@ export = {
         const post: BooruPost | void = await booru.search('danbooru', tags[Math.floor(Math.random() * tags.length)]);
 
         if (!post) {
-            this.postToPremiumServer(client, loopDelay);
+            // if no post is found, try again in 5 seconds
+            setTimeout(() => {
+                this.postToPremiumServer(client, loopDelay);
+            }, 5000);
             return;
         }
 
