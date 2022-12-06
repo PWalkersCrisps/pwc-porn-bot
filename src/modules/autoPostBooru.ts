@@ -32,12 +32,17 @@ export = {
 
         const guilds: GuildDocument[] = await guildSchema.find({ premium: true });
 
-        guilds.forEach(async (guild: GuildDocument) => {
-            const channel = await client.channels.fetch(guild.autoPostChannel);
-            if (channel) {
-                channel.send({ embeds: [embed], components: [row] });
-            }
-        });
+        try {
+            guilds.forEach(async (guild: GuildDocument) => {
+                const channel = await client.channels.fetch(guild.autoPostChannel);
+                if (channel) {
+                    channel.send({ embeds: [embed], components: [row] });
+                }
+            });
+        }
+        catch (error) {
+            console.log(error);
+        }
 
         setTimeout(() => {
             this.postToPremiumServer(client, loopDelay);
