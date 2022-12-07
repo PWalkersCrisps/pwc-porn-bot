@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-import { REST } from '@discordjs/rest';
+import { REST } from 'discord.js';
 import { Routes } from 'discord-api-types/v9';
 import { clientID, testingGuildID } from './data/config.json'; // Import the client ID and guild ID from the config file
 import { readdirSync } from 'fs'; // Import the file system module
