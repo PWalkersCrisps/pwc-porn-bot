@@ -17,7 +17,7 @@ module.exports = {
         const site: string = interaction.options.getString('booruchoice');
         const tags: string = interaction.options.getString('tags');
 
-        const post: BooruPost | void = await booru.search(site, tags);
+        const post: BooruPost | void = await booru.searchPosts(site, tags);
 
         if (!post) {
             const embed: EmbedBuilder = new EmbedBuilder()
