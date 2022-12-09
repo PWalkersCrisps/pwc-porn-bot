@@ -1,4 +1,4 @@
-import { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, Events } from 'discord.js';
+import { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ColorResolvable } from 'discord.js';
 import booru from '../../modules/booru';
 
 module.exports = {
@@ -13,7 +13,6 @@ module.exports = {
 
             return interaction.reply({ embeds: [embed] });
         }
-
         const site: string = interaction.options.getString('booruchoice');
         const tags: string = interaction.options.getString('tags');
 
@@ -28,23 +27,32 @@ module.exports = {
             return interaction.reply({ embeds: [embed] });
         }
 
-        const embed: EmbedBuilder = new EmbedBuilder()
-            .setColor(0x0000ff)
-            .setImage(await post.fileUrl);
-
-        const row: ActionRowBuilder<ButtonBuilder> = new ActionRowBuilder<ButtonBuilder>()
-            .addComponents(
-                new ButtonBuilder()
-                    .setStyle(ButtonStyle.Link)
-                    .setLabel('View Post')
-                    .setURL(post.postView),
-                new ButtonBuilder()
-                    .setStyle(ButtonStyle.Danger)
-                    .setLabel('⚠️')
-                    .setCustomId('delete')
-            );
+        const content = await messageContent(post);
+        const embed = content.embed;
+        const row = content.row;
 
         interaction.reply({ embeds: [embed], components: [row] });
 
     },
 };
+
+async function messageContent(post: any) {
+    // Create an embed with the post's image
+    const embed: EmbedBuilder = new EmbedBuilder()
+        .setColor('Random' as ColorResolvable)
+        .setImage(await post.fileUrl);
+
+    // Create a row of buttons with links to the post and a delete button
+    const row: ActionRowBuilder<ButtonBuilder> = new ActionRowBuilder<ButtonBuilder>()
+        .addComponents(
+            new ButtonBuilder()
+                .setStyle(ButtonStyle.Link)
+                .setLabel('View Post')
+                .setURL(post.postView),
+            new ButtonBuilder()
+                .setStyle(ButtonStyle.Danger)
+                .setLabel('⚠️')
+                .setCustomId('delete')
+        );
+    return { embed, row };
+}
