@@ -1,6 +1,6 @@
 import { shortHand } from '../data/mulitplesOfBytes.json';
 
-export const utils = {
+export = {
     capitalizeFirstLetter: function(string: string): string {
     // Capitalize the first letter of a string
         return string.charAt(0).toUpperCase() + string.slice(1);

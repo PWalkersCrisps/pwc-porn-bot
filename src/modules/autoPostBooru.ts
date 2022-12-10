@@ -30,6 +30,8 @@ export = {
                 return guild.autoPostChannel && client.guilds.cache.has(guild.guildId);
             });
 
+            console.log(`Posting to ${guilds.length} servers...`);
+
             // Iterate over the list of premium guilds
             guilds.forEach(async (guild: GuildDocument) => {
                 // Fetch the channel specified in the guild's autoPostChannel property
