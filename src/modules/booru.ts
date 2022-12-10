@@ -11,10 +11,6 @@ export = {
                         return !filters.some((tag) => post.tags.includes(tag));
                     });
 
-                    filteredPosts.filter((post) => {
-                        return rating.includes(post.rating);
-                    });
-
                     if (!filteredPosts) return; // If there are no posts left, return from the function
 
                     return filteredPosts; // Otherwise, return the filtered posts
