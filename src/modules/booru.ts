@@ -1,38 +1,87 @@
-import { search, SearchResults } from 'booru';
-import filters from '../data/filters.json';
+import { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ColorResolvable } from 'discord.js';
 import guildSchema from '../models/guildSchema';
+import tagsList from '../data/tags.json';
+import filters from '../data/filters.json';
+import { search } from 'booru';
 
 export = {
-    searchPosts: async function(site: string, tags: string | string[], limit = 1, random = true, rating: string[] = ['e', 'q']): Promise<void | BooruPost> {
+    autoPost: async function(client: any, loopDelay: number) {
         try {
-            search(site, tags, { limit, random })
-                .then((posts) => {
-                    const filteredPosts = posts.filter((post) => { // Filter out any posts with the specified tags
-                        return !filters.some((tag) => post.tags.includes(tag));
-                    });
+            console.log('Posting to premium server...');
+            // Get random item from tags.json
+            const tag: string = tagsList[Math.floor(Math.random() * tagsList.length)];
 
-                    if (!filteredPosts) return; // If there are no posts left, return from the function
+            // Search for a post using the selected tag
+            const posts: any = await this.searchPosts('gelbooru', tag, 5);
 
-                    return filteredPosts; // Otherwise, return the filtered posts
-                })
-                .then((posts) => {
+            if (!posts[0] || !posts[0].fileUrl || !posts) {
+                // If no post is found, try again in 5 seconds
+                delay(5).then(async () => { await this.autoPost(client, loopDelay); });
+                return;
+            }
 
-                    if (!posts) {// If there are no posts left, rerun the function
+            const post = posts[0];
 
-                        this.searchPosts(site, tags, limit, random, rating);
-                        return;
-                    }
+            // Create an embed with the post's image
+            const embed: EmbedBuilder = new EmbedBuilder()
+                .setColor('Random' as ColorResolvable)
+                .setImage(await post.fileUrl);
 
-                    const post = posts[0];
-                    return post;
-                })
-                .catch((error) => {
-                    // Handle any errors
-                    console.error(error);
-                });
+            // Create a row of buttons with links to the post and a delete button
+            const row: ActionRowBuilder<ButtonBuilder> = new ActionRowBuilder<ButtonBuilder>()
+                .addComponents(
+                    new ButtonBuilder()
+                        .setStyle(ButtonStyle.Link)
+                        .setLabel('View Post')
+                        .setURL(post.postView),
+                    new ButtonBuilder()
+                        .setStyle(ButtonStyle.Danger)
+                        .setLabel('⚠️')
+                        .setCustomId('delete')
+                );
+
+            const guilds = await guildSchema.find({ premium: true });
+
+            for (const guild of guilds) {
+                const channel = client.channels.cache.get(guild.autoPostChannel);
+                if (channel) {
+                    channel.send({ embeds: [embed], components: [row] });
+                }
+            }
+        }
+        catch (error) {
+            // Log any errors that occur
+            console.log(error);
+        }
+
+        // Set a timeout to run the function again after the specified delay
+        delay(loopDelay).then(() => { this.autoPost(client, loopDelay); });
+    },
+    searchPosts: async function(site: string, tags: string | string[], limit = 1, random = true, rating: string[] = ['e', 'q']) {
+        try {
+            const rawPosts = await search(site, tags, { limit, random });
+            let posts: any;
+
+            if (!rawPosts[0]) {
+                return;
+            }
+
+            posts = rawPosts.filter((post: any) => rating.includes(post.rating));
+
+            if (!posts[0]) {
+                return;
+            }
+
+            // Filter out posts that are blacklisted with tags in filters.json
+            posts = posts.filter((post: any) => !filters.some((filter: string) => post.tags.includes(filter)));
+
+            return posts;
         }
         catch (error) {
             return console.error(error);
         }
     },
-}
+};
+
+// Delay function
+const delay = (seconds: number) => new Promise((resolve) => setTimeout(resolve, seconds * 1000));
