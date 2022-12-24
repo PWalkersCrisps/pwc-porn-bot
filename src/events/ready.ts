@@ -2,7 +2,7 @@
 import { clientID, testingGuildID } from '../data/config.json';
 import { REST, Routes } from 'discord.js';
 
-import autoPostBooru from '../modules/autoPostBooru';
+import booru from '../modules/booru';
 
 import commands = require('../data/interactionCommands');
 import time from '../modules/time';
@@ -31,7 +31,7 @@ module.exports = {
 
             console.log(`${ time.currentDate } Successfully reloaded application (/) commands.`);
 
-            autoPostBooru.postToPremiumServer(client, 30);
+            await booru.autoPost(client, 30);
         }
         catch (error) {
             console.error(`${time.currentDate} ready error: ${error}`);
