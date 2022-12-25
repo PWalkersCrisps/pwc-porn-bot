@@ -12,7 +12,7 @@ export = {
             const tag: string = tagsList[Math.floor(Math.random() * tagsList.length)];
 
             // Search for a post using the selected tag
-            const posts: any = await this.searchPosts('gelbooru', tag, 5);
+            const posts: any = await this.searchPosts('rule34', tag, 5);
 
             if (!posts[0] || !posts[0].fileUrl || !posts) {
                 // If no post is found, try again in 5 seconds
